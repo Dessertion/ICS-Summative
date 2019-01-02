@@ -3,7 +3,7 @@
 target/
 
 # IDE prefs
-.idea
-.iml
+*.idea
+*.iml
 
 
