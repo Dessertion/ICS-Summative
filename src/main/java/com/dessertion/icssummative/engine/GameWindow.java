@@ -100,6 +100,9 @@ public final class GameWindow {
 		return glfwGetKey(windowHandle,keyCode)==GLFW_PRESS;
 	}
 
+	/**
+	 * Called on window destruction
+	 */
 	public void release(){
 		// Free the window callbacks and destroy the window
 		glfwFreeCallbacks(windowHandle);
@@ -148,5 +151,13 @@ public final class GameWindow {
 
 	public void setResized(boolean resized) {
 		this.resized = resized;
+	}
+
+	/**
+	 * Call on window update (renders)
+	 */
+	public void update(){
+		glfwSwapBuffers(windowHandle);
+		glfwPollEvents();
 	}
 }
