@@ -6,6 +6,7 @@ import org.lwjgl.opengl.GL;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL11.GL_TRUE;
 import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.system.MemoryUtil.*;
 
@@ -47,6 +48,10 @@ public final class GameWindow {
 
 		//set default window hints
 		glfwDefaultWindowHints();
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
 		//create window
 		windowHandle = glfwCreateWindow(width,height,title,NULL,NULL);
@@ -82,7 +87,7 @@ public final class GameWindow {
 		glfwShowWindow(windowHandle);
 
 		//create OpenGL capabilities
-		GL.create();
+		GL.createCapabilities();
 		//set clear colour
 		glClearColor(1.0f,1.0f,0.0f,0.0f);
 

@@ -1,6 +1,6 @@
 package com.dessertion.icssummative.engine;
 
-import com.dessertion.icssummative.engine.state.StateManager;
+import com.dessertion.icssummative.state.StateManager;
 
 public class GameEngine implements Runnable {
 
@@ -74,6 +74,7 @@ public class GameEngine implements Runnable {
 
 	protected void release() {
 		window.release();
+		StateManager.release();
 	}
 
 	protected void update(float interval) {
