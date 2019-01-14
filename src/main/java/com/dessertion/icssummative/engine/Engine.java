@@ -72,7 +72,6 @@ public class Engine implements Runnable {
 			//render once per loop, then wait until the render time slot is over before restarting
 			render();
 			sync();
-			
 		}
 	}
 	

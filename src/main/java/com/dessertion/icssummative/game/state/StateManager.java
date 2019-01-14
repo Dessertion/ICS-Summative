@@ -21,6 +21,7 @@ public final class StateManager {
 		states.add(new MainGameState());
 		currentIdx = 0;
 		current = states.get(0);
+		for(State s : states)s.init();
 	}
 	
 	/**

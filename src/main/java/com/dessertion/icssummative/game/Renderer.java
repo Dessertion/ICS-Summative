@@ -34,13 +34,20 @@ public class Renderer {
 		glBindVertexArray(vaoId);
 		glEnableVertexAttribArray(0);
 		
+		//draw triangles
+		glDrawArrays(GL_TRIANGLES,0,3);
 		
+		//restore state
+		glDisableVertexAttribArray(0);
+		glBindVertexArray(0);
+		
+		shader.unbind();
 	}
 	
 	public void init() throws Exception {
 		shader = new EngineShader();
-		shader.createVertexShader(Util.loadResourceAsString("/vertex.vs"));
-		shader.createFragmentShader(Util.loadResourceAsString("/fragment.fs"));
+		shader.createVertexShader(Util.loadResourceAsString("src/main/resources/vertex.vs"));
+		shader.createFragmentShader(Util.loadResourceAsString("src/main/resources/fragment.fs"));
 		shader.link();
 		
 		//vertices?
@@ -58,11 +65,33 @@ public class Renderer {
 			//create vao
 			vaoId = glGenVertexArrays();
 			
+			vboId = glGenBuffers();
+			glBindBuffer(GL_ARRAY_BUFFER,vboId);
+			glBufferData(GL_ARRAY_BUFFER,verticesBuffer,GL_STATIC_DRAW);
+			
+			glVertexAttribPointer(0,3,GL_FLOAT,false,0,0);
+			
+			glBindBuffer(GL_ARRAY_BUFFER,0);
+			glBindVertexArray(0);
 			
 		} finally {
-		
+			//manually free the memory :P
+			if(verticesBuffer!=null)MemoryUtil.memFree(verticesBuffer);
 		}
 		
+	}
+	
+	public void release(){
+		if(shader!=null)shader.release();
+		glDisableVertexAttribArray(0);
+		
+		//delete vbo
+		glBindBuffer(GL_ARRAY_BUFFER,0);
+		glDeleteBuffers(vboId);
+		
+		//delete vao
+		glBindVertexArray(0);
+		glDeleteVertexArrays(vaoId);
 	}
 	
 	public void clear() {
