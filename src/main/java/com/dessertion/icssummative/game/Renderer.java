@@ -21,29 +21,6 @@ public class Renderer {
 	
 	}
 	
-	public void render(Window window) {
-		clear();
-		if (window.isResized()) {
-			glViewport(0, 0, window.getWidth(), window.getHeight());
-			window.setResized(false);
-		}
-		
-		shader.bind();
-		
-		//bind to vao
-		glBindVertexArray(vaoId);
-		glEnableVertexAttribArray(0);
-		
-		//draw triangles
-		glDrawArrays(GL_TRIANGLES,0,3);
-		
-		//restore state
-		glDisableVertexAttribArray(0);
-		glBindVertexArray(0);
-		
-		shader.unbind();
-	}
-	
 	public void init() throws Exception {
 		shader = new EngineShader();
 		shader.createVertexShader(Util.loadResourceAsString("/vertex.vs"));
@@ -62,17 +39,22 @@ public class Renderer {
 			verticesBuffer = MemoryUtil.memAllocFloat(vertices.length);
 			verticesBuffer.put(vertices).flip();
 			
-			//create vao
+			//create vao and bind it
 			vaoId = glGenVertexArrays();
+			glBindVertexArray(vaoId);
 			
+			//create vbo and bind it
 			vboId = glGenBuffers();
 			glBindBuffer(GL_ARRAY_BUFFER,vboId);
 			glBufferData(GL_ARRAY_BUFFER,verticesBuffer,GL_STATIC_DRAW);
 			
+			//define structure of the data
 			glVertexAttribPointer(0,3,GL_FLOAT,false,0,0);
 			
 			glBindBuffer(GL_ARRAY_BUFFER,0);
 			glBindVertexArray(0);
+			
+			shader.unbind();
 			
 		} finally {
 			//manually free the memory :P
@@ -81,8 +63,32 @@ public class Renderer {
 		
 	}
 	
+	public void render(Window window) {
+		clear();
+		if (window.isResized()) {
+			glViewport(0, 0, window.getWidth(), window.getHeight());
+			window.setResized(false);
+		}
+		
+		shader.bind();
+		
+		//bind to vao
+		glBindVertexArray(vaoId);
+		glEnableVertexAttribArray(0);
+		
+		//draw triangles
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+		
+		//restore state
+		glDisableVertexAttribArray(0);
+		glBindVertexArray(0);
+		
+		shader.unbind();
+	}
+	
 	public void release(){
 		if(shader!=null)shader.release();
+		
 		glDisableVertexAttribArray(0);
 		
 		//delete vbo
@@ -93,6 +99,8 @@ public class Renderer {
 		glBindVertexArray(0);
 		glDeleteVertexArrays(vaoId);
 	}
+	
+	
 	
 	public void clear() {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

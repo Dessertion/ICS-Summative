@@ -30,7 +30,7 @@ public class TestState implements State {
 	
 	@Override
 	public void release() {
-	
+		renderer.release();
 	}
 	
 	@Override
