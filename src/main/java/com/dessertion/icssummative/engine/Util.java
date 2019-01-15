@@ -16,10 +16,10 @@ public class Util {
 	 */
 	public static String loadResourceAsString(String path) throws Exception {
 		String result = "";
-		File   file   = new File(path);
+		File   file   = new File(Util.class.getResource(path).getFile());
 		//lol black magicks :D
 		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-			for (String temp = br.readLine(); temp != null; ) result += temp;
+			for (String temp = ""; temp != null; temp=br.readLine()) result += temp+"\n";
 		}
 		return result;
 	}

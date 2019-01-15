@@ -46,8 +46,8 @@ public class Renderer {
 	
 	public void init() throws Exception {
 		shader = new EngineShader();
-		shader.createVertexShader(Util.loadResourceAsString("src/main/resources/vertex.vs"));
-		shader.createFragmentShader(Util.loadResourceAsString("src/main/resources/fragment.fs"));
+		shader.createVertexShader(Util.loadResourceAsString("/vertex.vs"));
+		shader.createFragmentShader(Util.loadResourceAsString("/fragment.vs"));
 		shader.link();
 		
 		//vertices?

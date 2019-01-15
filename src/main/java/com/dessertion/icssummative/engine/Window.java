@@ -88,7 +88,7 @@ public final class Window {
 		//create OpenGL capabilities
 		GL.createCapabilities();
 		//set clear colour
-		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+		glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
 		
 	}
 	

@@ -1,8 +1,8 @@
-#version 330 //gl version 3.3
+#version 330 //opengl 3.3
 
+layout (location =0) in vec3 position; //position in a vector w/ 3 values
 
-layout (location=0) in vec3 position;
-
-void main(){
-    gl_Position = vec4(position,1.0);
+void main()
+{
+	gl_Position = vec4(position, 1.0);
 }

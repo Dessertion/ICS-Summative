@@ -52,8 +52,8 @@ public class EngineShader {
 		glLinkProgram(programId);
 		if (glGetProgrami(programId, GL_LINK_STATUS) == GL_FALSE)
 			throw new Exception("Error linking shader code: " + glGetProgramInfoLog(programId, 1024));
-		if (vertexShaderId != GL_FALSE) glDetachShader(programId, vertexShaderId);
-		if (fragmentShaderId != GL_FALSE) glDetachShader(programId, fragmentShaderId);
+		if (vertexShaderId != 0)glDetachShader(programId, vertexShaderId);
+		if (fragmentShaderId != 0)glDetachShader(programId, fragmentShaderId);
 		
 		glValidateProgram(programId);
 		if (glGetProgrami(programId, GL_VALIDATE_STATUS) == GL_FALSE)
