@@ -7,9 +7,7 @@ import org.lwjgl.opengl.GL;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.opengl.GL11.GL_TRUE;
-import static org.lwjgl.opengl.GL11.glClearColor;
-import static org.lwjgl.opengl.GL11.GL_FALSE;
+import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
 public final class Window {
@@ -69,6 +67,8 @@ public final class Window {
 		
 		//create OpenGL capabilities
 		GL.createCapabilities();
+		
+		glEnable(GL_DEPTH_TEST);
 		
 		setClearColor(1,1,1,1);	//set clear colour
 		

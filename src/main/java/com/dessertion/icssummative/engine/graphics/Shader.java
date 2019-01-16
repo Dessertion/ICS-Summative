@@ -60,6 +60,7 @@ public class Shader {
 		glUniform3f(getUniformLocation(varName),v.x,v.y,v.z);
 	}
 	
+	//TODO check works or not lol
 	public void setUniformMat4f(String varName, Matrix4f mat){
 		glUniformMatrix4fv(getUniformLocation(varName),false,BufferUtils.createFloatBuffer(mat.get(new float[4*4])));
 	}
