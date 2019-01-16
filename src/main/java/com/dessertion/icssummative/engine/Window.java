@@ -1,5 +1,6 @@
 package com.dessertion.icssummative.engine;
 
+import com.dessertion.icssummative.game.MouseInput;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
@@ -8,6 +9,7 @@ import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.GL_TRUE;
 import static org.lwjgl.opengl.GL11.glClearColor;
+import static org.lwjgl.opengl.GL11.GL_FALSE;
 import static org.lwjgl.system.MemoryUtil.*;
 
 public final class Window {
@@ -16,22 +18,20 @@ public final class Window {
 	private int    width, height;
 	private long    windowHandle;
 	private boolean vsync;
-	private boolean resized;
 	
 	/**
 	 * Constructor for game window
 	 *
-	 * @param title Title of Window
-	 * @param width Width in px
+	 * @param title  Title of Window
+	 * @param width  Width in px
 	 * @param height Height in px
-	 * @param vsync If vsync is on or off
+	 * @param vsync  If vsync is on or off
 	 */
 	public Window(String title, int width, int height, boolean vsync) {
 		this.title = title;
 		this.width = width;
 		this.height = height;
 		this.vsync = vsync;
-		this.resized = false;
 	}
 	
 	/**
@@ -47,6 +47,7 @@ public final class Window {
 		//set default window hints
 		glfwDefaultWindowHints();
 		//for mac compatibility
+		glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -56,52 +57,23 @@ public final class Window {
 		windowHandle = glfwCreateWindow(width, height, title, NULL, NULL);
 		if (windowHandle == NULL) throw new RuntimeException("Failed to create GLFW window");
 		
-		//setup resize callback
-		glfwSetFramebufferSizeCallback(windowHandle, (window, width, height) -> {
-			this.width = width;
-			this.height = height;
-			this.setResized(true);
-		});
-		
-		//TODO see if can remove?
-		// Setup a key callback. It will be called every time a key is pressed, repeated or released.
-		glfwSetKeyCallback(windowHandle, (window, key, scancode, action, mods) -> {
-			if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) {
-				glfwSetWindowShouldClose(window, true); // We will detect this in the rendering loop
-			}
-		});
-		
-		//get resolution of primary monitor
+		//centre window
 		GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-		//center window
 		glfwSetWindowPos(windowHandle, (vidmode.width() - width) / 2, (vidmode.height() - height) / 2);
 		
-		//make the OpenGL context current
-		glfwMakeContextCurrent(windowHandle);
+		glfwMakeContextCurrent(windowHandle);//make the OpenGL context current
+		glfwShowWindow(windowHandle); //make window visible
 		
 		//set vsync
 		if (isVSync()) glfwSwapInterval(1);
 		
-		//make window visible
-		glfwShowWindow(windowHandle);
-		
 		//create OpenGL capabilities
 		GL.createCapabilities();
-		//set clear colour
-		glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
 		
-	}
-	
-	public void setClearColor(float r, float g, float b, float a) {
-		glClearColor(r, g, b, a);
-	}
-	
-	public boolean windowShouldClose() {
-		return glfwWindowShouldClose(windowHandle);
-	}
-	
-	public boolean isKeyPressed(int keyCode) {
-		return glfwGetKey(windowHandle, keyCode) == GLFW_PRESS;
+		setClearColor(1,1,1,1);	//set clear colour
+		
+		//setup input callbacks
+		glfwSetMouseButtonCallback(windowHandle, new MouseInput());
 	}
 	
 	/**
@@ -121,8 +93,15 @@ public final class Window {
 		glfwPollEvents();
 	}
 	
-	//getter setters
-	//TODO javadocs
+	public void setClearColor(float r, float g, float b, float a) {
+		glClearColor(r, g, b, a);
+	}
+	
+	public boolean windowShouldClose() {
+		return glfwWindowShouldClose(windowHandle);
+	}
+	
+	//<editor-fold desc="Getter Setters">
 	public String getTitle() {
 		return title;
 	}
@@ -134,7 +113,6 @@ public final class Window {
 	public int getWidth() {
 		return width;
 	}
-	
 	
 	public void setWidth(int width) {
 		this.width = width;
@@ -158,14 +136,7 @@ public final class Window {
 		if (isVSync()) glfwSwapInterval(1);
 		else glfwSwapInterval(0);
 	}
-	
-	public boolean isResized() {
-		return resized;
-	}
-	
-	public void setResized(boolean resized) {
-		this.resized = resized;
-	}
+	//</editor-fold>
 	
 	
 }

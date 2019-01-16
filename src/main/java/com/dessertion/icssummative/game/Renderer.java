@@ -1,8 +1,8 @@
 package com.dessertion.icssummative.game;
 
 import com.dessertion.icssummative.engine.Window;
-import com.dessertion.icssummative.engine.Util;
-import com.dessertion.icssummative.engine.shader.EngineShader;
+import com.dessertion.icssummative.engine.util.ResourceUtils;
+import com.dessertion.icssummative.engine.graphics.ShaderUtil;
 import org.lwjgl.system.MemoryUtil;
 
 import java.nio.FloatBuffer;
@@ -12,9 +12,9 @@ import static org.lwjgl.opengl.GL30.*;
 
 public class Renderer {
 	
-	private EngineShader shader;
-	private int          vaoId;
-	private int          vboId;
+	private ShaderUtil shaderUtil;
+	private int        vaoId;
+	private int        vboId;
 	
 	
 	public Renderer() {
@@ -22,10 +22,10 @@ public class Renderer {
 	}
 	
 	public void init() throws Exception {
-		shader = new EngineShader();
-		shader.createVertexShader(Util.loadResourceAsString("/vertex.vs"));
-		shader.createFragmentShader(Util.loadResourceAsString("/fragment.vs"));
-		shader.link();
+		shaderUtil = new ShaderUtil();
+		shaderUtil.createVertexShader(ResourceUtils.loadResourceAsString("/vertex.glsl"));
+		shaderUtil.createFragmentShader(ResourceUtils.loadResourceAsString("/fragment.glsl"));
+		shaderUtil.link();
 		
 		//vertices?
 		float[] vertices = new float[]{
@@ -39,11 +39,11 @@ public class Renderer {
 			verticesBuffer = MemoryUtil.memAllocFloat(vertices.length);
 			verticesBuffer.put(vertices).flip();
 			
-			//create vao and bind it
+			//create vao and enable it
 			vaoId = glGenVertexArrays();
 			glBindVertexArray(vaoId);
 			
-			//create vbo and bind it
+			//create vbo and enable it
 			vboId = glGenBuffers();
 			glBindBuffer(GL_ARRAY_BUFFER,vboId);
 			glBufferData(GL_ARRAY_BUFFER,verticesBuffer,GL_STATIC_DRAW);
@@ -54,7 +54,7 @@ public class Renderer {
 			glBindBuffer(GL_ARRAY_BUFFER,0);
 			glBindVertexArray(0);
 			
-			shader.unbind();
+			shaderUtil.disable();
 			
 		} finally {
 			//manually free the memory :P
@@ -65,14 +65,9 @@ public class Renderer {
 	
 	public void render(Window window) {
 		clear();
-		if (window.isResized()) {
-			glViewport(0, 0, window.getWidth(), window.getHeight());
-			window.setResized(false);
-		}
+		shaderUtil.enable();
 		
-		shader.bind();
-		
-		//bind to vao
+		//enable to vao
 		glBindVertexArray(vaoId);
 		glEnableVertexAttribArray(0);
 		
@@ -83,11 +78,11 @@ public class Renderer {
 		glDisableVertexAttribArray(0);
 		glBindVertexArray(0);
 		
-		shader.unbind();
+		shaderUtil.disable();
 	}
 	
 	public void release(){
-		if(shader!=null)shader.release();
+		if(shaderUtil !=null) shaderUtil.release();
 		
 		glDisableVertexAttribArray(0);
 		

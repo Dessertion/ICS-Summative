@@ -46,6 +46,7 @@ public class Engine implements Runnable {
 		window.init();
 		timer.init();
 		StateManager.init();
+		
 	}
 	
 	/**
@@ -75,11 +76,6 @@ public class Engine implements Runnable {
 		}
 	}
 	
-	protected void release() {
-		window.release();
-		StateManager.release();
-	}
-	
 	protected void update(float interval) {
 		StateManager.update(interval);
 	}
@@ -91,7 +87,6 @@ public class Engine implements Runnable {
 	protected void render() {
 		StateManager.render(window);
 		window.update();
-		
 	}
 	
 	/**
@@ -110,6 +105,10 @@ public class Engine implements Runnable {
 		}
 	}
 	
+	protected void release() {
+		window.release();
+		StateManager.release();
+	}
 	
 	public boolean isRunning() {
 		return running;
