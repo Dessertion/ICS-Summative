@@ -16,12 +16,31 @@ public class Shader {
 	
 	private final int program;
 	
+	public static final int VERTEX_ATTRIB = 0;
+	public static final int TEX_COORD = 1;
+	
+	public static Shader BG;
+	
 	private Map<String,Integer> cache = new HashMap<>(); //bit of dp here to prevent bottlenecking b/n gpu and cpu
 	
 	public Shader(String vertPath, String fragPath){
 		program = ShaderUtils.load(vertPath,fragPath);
 	}
 	
+	public static void loadAll(){
+		//TODO complete
+	}
+	
+	
+	public void enable(){
+		glUseProgram(program);
+	}
+	
+	public void disable(){
+		glUseProgram(0);
+	}
+	
+	//<editor-fold desc="Uniform Variable Setters">
 	public int getUniformLocation(String varName){
 		if(cache.containsKey(varName))return cache.get(varName); //dp lol
 		
@@ -64,16 +83,7 @@ public class Shader {
 	public void setUniformMat4f(String varName, Matrix4f mat){
 		glUniformMatrix4fv(getUniformLocation(varName),false,BufferUtils.createFloatBuffer(mat.get(new float[4*4])));
 	}
-	
-	
-	public void enable(){
-		glUseProgram(program);
-	}
-	
-	public void disable(){
-		glUseProgram(0);
-	}
-	
+	//</editor-fold>
 	
 }
 

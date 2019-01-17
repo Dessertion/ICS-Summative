@@ -1,6 +1,7 @@
 package com.dessertion.icssummative.engine;
 
 import com.dessertion.icssummative.game.state.StateManager;
+import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL;
 
 public class Engine implements Runnable {
@@ -12,12 +13,14 @@ public class Engine implements Runnable {
 	private final        Window  window;
 	private final        Thread  gameThread;
 	private              boolean running;
+	public static Matrix4f proj = new Matrix4f();
 	
 	
 	public Engine(String windowTitle, int width, int height, boolean vsync) throws Exception {
 		window = new Window(windowTitle, width, height, vsync);
 		gameThread = new Thread(this, "GAME_THREAD");
 		timer = new Timer();
+		proj.ortho(-4.0f,4.0f,-3.0f,3.0f,-1.0f,1.0f);
 	}
 	
 	public void start() {
