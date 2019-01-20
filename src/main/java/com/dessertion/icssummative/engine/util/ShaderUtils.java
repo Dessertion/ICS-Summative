@@ -38,8 +38,6 @@ public class ShaderUtils {
 		glLinkProgram(program);
 		glValidateProgram(program);
 		
-		if (checkValidateStatus(program)) return -1;
-		
 		//delete shaders
 		glDeleteShader(vert); glDeleteShader(frag);
 		

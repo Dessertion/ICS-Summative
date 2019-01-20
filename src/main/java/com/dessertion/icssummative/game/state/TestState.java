@@ -1,36 +1,33 @@
 package com.dessertion.icssummative.game.state;
 
 import com.dessertion.icssummative.engine.Window;
-import com.dessertion.icssummative.game.Renderer;
+import com.dessertion.icssummative.game.Level;
+
+import static org.lwjgl.opengl.GL11.*;
 
 public class TestState implements State {
 	
-	private Renderer renderer;
+	Level level;
 	
 	@Override
 	public void init() {
-		renderer = new Renderer();
-		try {
-			renderer.init();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
+		level = new Level();
 	}
 	
 	@Override
-	public void update(float interval) {
+	public void update(double interval) {
 	
 	}
 	
 	@Override
 	public void render(Window window) {
-		renderer.render(window);
+		level.render();
+		int err = glGetError();
+		if(err!=GL_NO_ERROR)System.out.println(err);
 	}
 	
 	@Override
 	public void release() {
-		renderer.release();
 	}
 	
 	@Override

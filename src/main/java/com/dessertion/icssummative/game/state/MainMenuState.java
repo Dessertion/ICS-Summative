@@ -1,14 +1,12 @@
 package com.dessertion.icssummative.game.state;
 
 import com.dessertion.icssummative.engine.Window;
-import com.dessertion.icssummative.game.Renderer;
 
 /**
  * @author Dessertion
  */
 public class MainMenuState implements State {
 	
-	private Renderer renderer;
 	
 	@Override
 	public void init() {
@@ -16,7 +14,7 @@ public class MainMenuState implements State {
 	}
 	
 	@Override
-	public void update(float interval) {
+	public void update(double interval) {
 	
 	}
 	

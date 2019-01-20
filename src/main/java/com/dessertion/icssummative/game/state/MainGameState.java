@@ -14,7 +14,7 @@ public class MainGameState implements State{
 	}
 	
 	@Override
-	public void update(float interval) {
+	public void update(double interval) {
 	
 	}
 	

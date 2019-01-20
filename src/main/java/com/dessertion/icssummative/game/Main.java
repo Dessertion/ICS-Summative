@@ -5,9 +5,10 @@ import com.dessertion.icssummative.engine.Engine;
 public class Main {
 
 	public static void main(String[] args) {
-		boolean vSync = true;
+		boolean vSync = false;
 		try {
 			Engine engine = new Engine("Bloons",800,600,vSync);
+			engine.testing=true;
 			engine.start();
 		} catch (Exception e) {
 			//if error encountered, exit with error

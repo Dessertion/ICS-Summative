@@ -1,6 +1,6 @@
 package com.dessertion.icssummative.engine.graphics;
 
-import com.dessertion.icssummative.engine.util.BufferUtils;
+import com.dessertion.icssummative.engine.util.MyBufferUtils;
 
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
@@ -27,21 +27,21 @@ public class VertexArray {
 		
 		vbo = glGenBuffers();
 		glBindBuffer(GL_ARRAY_BUFFER,vbo);
-		glBufferData(GL_ARRAY_BUFFER,BufferUtils.createFloatBuffer(vertices),GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER,MyBufferUtils.createFloatBuffer(vertices),GL_STATIC_DRAW);
 		glVertexAttribPointer(Shader.VERTEX_ATTRIB,3,GL_FLOAT,false,0,0);
 		glEnableVertexAttribArray(Shader.VERTEX_ATTRIB);
 		
 		tbo = glGenBuffers();
 		glBindBuffer(GL_ARRAY_BUFFER,tbo);
-		glBufferData(GL_ARRAY_BUFFER,BufferUtils.createFloatBuffer(textureCoordinates),GL_STATIC_DRAW);
-		glVertexAttribPointer(Shader.TEX_COORD,3,GL_FLOAT,false,0,0);
+		glBufferData(GL_ARRAY_BUFFER,MyBufferUtils.createFloatBuffer(textureCoordinates),GL_STATIC_DRAW);
+		glVertexAttribPointer(Shader.TEX_COORD,2,GL_FLOAT,false,0,0);
 		glEnableVertexAttribArray(Shader.TEX_COORD);
 		
 		ibo = glGenBuffers();
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,ibo);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER,BufferUtils.createByteBuffer(indices),GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER,MyBufferUtils.createByteBuffer(indices),GL_STATIC_DRAW);
 		
-		//unbind shit
+		//unbind stuff
 		glBindBuffer(GL_ARRAY_BUFFER,0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
 		glBindVertexArray(0);

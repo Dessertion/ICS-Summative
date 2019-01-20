@@ -10,17 +10,21 @@ public final class StateManager {
 	private static ArrayList<State> states;
 	private static State            current;
 	private static int              currentIdx;
+	public static boolean testState = false;
 	
 	/**
 	 * Called on first initialization of the manager
 	 */
 	public static void init() {
 		states = new ArrayList<>();
-		states.add(new TestState());
 		states.add(new MainMenuState());
 		states.add(new MainGameState());
 		currentIdx = 0;
-		current = states.get(0);
+		if(testState){
+			states.add(new TestState());
+			currentIdx=states.size()-1;
+		}
+		current = states.get(currentIdx);
 		for(State s : states)s.init();
 	}
 	
@@ -48,7 +52,7 @@ public final class StateManager {
 	/**
 	 * Updates current state
 	 */
-	public static void update(float interval) {
+	public static void update(double interval) {
 		current.update(interval);
 	}
 	

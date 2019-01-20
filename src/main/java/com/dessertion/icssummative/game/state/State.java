@@ -16,7 +16,7 @@ public interface State {
 	/**
 	 * Update state information
 	 */
-	void update(float interval);
+	void update(double interval);
 	
 	/**
 	 * Render to screen

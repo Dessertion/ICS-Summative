@@ -86,11 +86,10 @@ public final class Window {
 	}
 	
 	/**
-	 * Call on window update (renders)
+	 * Call on window render (renders)
 	 */
-	public void update() {
+	public void render() {
 		glfwSwapBuffers(windowHandle);
-		glfwPollEvents();
 	}
 	
 	public void setClearColor(float r, float g, float b, float a) {

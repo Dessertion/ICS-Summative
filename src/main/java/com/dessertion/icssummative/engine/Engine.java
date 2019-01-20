@@ -1,8 +1,13 @@
 package com.dessertion.icssummative.engine;
 
+import com.dessertion.icssummative.engine.graphics.Shader;
 import com.dessertion.icssummative.game.state.StateManager;
 import org.joml.Matrix4f;
-import org.lwjgl.opengl.GL;
+
+import static org.lwjgl.glfw.GLFW.glfwPollEvents;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
+import static org.lwjgl.opengl.GL13.glActiveTexture;
 
 public class Engine implements Runnable {
 	
@@ -13,14 +18,17 @@ public class Engine implements Runnable {
 	private final        Window  window;
 	private final        Thread  gameThread;
 	private              boolean running;
-	public static Matrix4f proj = new Matrix4f();
+	public boolean testing = false;
+	
+	public static Matrix4f       proj_mat   = new Matrix4f().ortho(-4.0f,4.0f,-3.0f,3.0f,-1.0f,1.0f);
+	
 	
 	
 	public Engine(String windowTitle, int width, int height, boolean vsync) throws Exception {
 		window = new Window(windowTitle, width, height, vsync);
 		gameThread = new Thread(this, "GAME_THREAD");
 		timer = new Timer();
-		proj.ortho(-4.0f,4.0f,-3.0f,3.0f,-1.0f,1.0f);
+		
 	}
 	
 	public void start() {
@@ -48,7 +56,11 @@ public class Engine implements Runnable {
 	protected void init() {
 		window.init();
 		timer.init();
+		//TODO remove, only for testing lol
+		if(testing)StateManager.testState=true;
 		StateManager.init();
+		
+		glActiveTexture(GL_TEXTURE0);
 		
 	}
 	
@@ -59,7 +71,8 @@ public class Engine implements Runnable {
 		float elapsed;
 		float accumulated = 0f;
 		float interval    = 1f / TARGET_UPS;
-		
+		int frames = 0, updates =0;
+		double frameTimer = timer.getTime();
 		running = true;
 		//loop while running and the window hasn't received a close command
 		while (running && !window.windowShouldClose()) {
@@ -71,15 +84,43 @@ public class Engine implements Runnable {
 			
 			while (accumulated >= interval) {
 				update(interval);
+				updates++;
 				accumulated -= interval;
 			}
 			//render once per loop, then wait until the render time slot is over before restarting
 			render();
-			sync();
+			frames++;
+			
+			if(timer.getTime()>=frameTimer+1){
+				frameTimer++;
+				System.out.println(updates + " ups " + frames + " fps");
+				updates=0;
+				frames = 0;
+			}
+			//TODO figure out how to sync without destroying fps lol
+			//sync(lastUpdateTime);
+			
+		}
+	}
+	
+	/**
+	 * Syncs rendering to the render interval
+	 */
+	private void sync(double lastUpdateTime) {
+		double  renderInterval = 1.0 / TARGET_FPS;
+		double endTime        = timer.getLastCallTime() + renderInterval;
+		double current;
+		//while current time is less than allotted time, wait
+		while ((current=timer.getTime())<endTime&&current-lastUpdateTime<1.0/TARGET_UPS) {
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+			}
 		}
 	}
 	
 	protected void update(float interval) {
+		glfwPollEvents();
 		StateManager.update(interval);
 	}
 	
@@ -88,25 +129,11 @@ public class Engine implements Runnable {
 	}
 	
 	protected void render() {
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		StateManager.render(window);
-		window.update();
+		window.render();
 	}
 	
-	/**
-	 * Syncs rendering to the render interval
-	 */
-	private void sync() {
-		float  renderInterval = 1f / TARGET_FPS;
-		double endTime        = timer.getLastCallTime() + renderInterval;
-		
-		//while current time is less than allotted time, wait
-		while (timer.getTime() < endTime) {
-			try {
-				Thread.sleep(1);
-			} catch (InterruptedException e) {
-			}
-		}
-	}
 	
 	protected void release() {
 		window.release();

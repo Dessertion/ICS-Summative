@@ -5,7 +5,7 @@ import java.nio.*;
 /**
  * @author Dessertion
  */
-public final class BufferUtils {
+public final class MyBufferUtils {
 	
 	/**
 	 * Returns a byte buffer from a byte array

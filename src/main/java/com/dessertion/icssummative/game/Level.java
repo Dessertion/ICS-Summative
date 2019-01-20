@@ -1,22 +1,35 @@
 package com.dessertion.icssummative.game;
 
-import com.dessertion.icssummative.engine.graphics.VertexArray;
+import com.dessertion.icssummative.engine.graphics.*;
+
+import static com.dessertion.icssummative.engine.Engine.proj_mat;
 
 /**
  * @author Dessertion
  */
 public class Level {
 	
-	private VertexArray background;
-	private float[]     vertices;
-	private byte[]      indices;
-	private float[]     tex;
+	private VertexArray mesh;
+	private Texture     tex;
+	private Shader shader;
+	
+	private float[] vertices;
+	private float[] tcs;
+	private byte[]  indices;
 	
 	public Level() {
 		init();
+		tex = new Texture("/textures/level.png");
 	}
 	
 	private void init() {
+		loadVertexArray();
+		shader = new Shader("/shaders/bg.vert", "/shaders/bg.frag");
+		shader.setUniform1i("tex",0);
+		shader.setUniformMat4f("proj_mat", proj_mat);
+	}
+	
+	private void loadVertexArray() {
 		vertices = new float[]{
 				-4f, -3f, 0f,
 				-4f, 3f, 0f,
@@ -29,18 +42,22 @@ public class Level {
 				2, 3, 0
 		};
 		//TODO understand this
-		tex = new float[]{
-				0, 1,
-				0, 0,
-				1, 0,
-				1, 1
+		tcs = new float[]{
+				0,1,
+				0,0,
+				1,0,
+				1,1
 		};
 		
-		background = new VertexArray(vertices,indices,tex);
+		mesh = new VertexArray(vertices, indices, tcs);
 	}
 	
-	public void render(){
-	
+	public void render() {
+		tex.bind();
+		shader.enable();
+		mesh.render();
+		shader.disable();
+		tex.unbind();
 	}
 	
 }
