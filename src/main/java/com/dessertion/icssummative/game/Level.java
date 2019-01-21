@@ -9,9 +9,12 @@ import static com.dessertion.icssummative.engine.Engine.proj_mat;
  */
 public class Level {
 	
-	private VertexArray mesh;
-	private Texture     tex;
-	private Shader shader;
+	private        VertexArray mesh;
+	private        Texture     tex;
+	private static Shader      shader = new Shader("/shaders/bg.vert", "/shaders/bg.frag")
+											.setUniform1i("tex", 0)
+											.setUniformMat4f("proj_mat", proj_mat);
+	
 	
 	private float[] vertices;
 	private float[] tcs;
@@ -23,13 +26,10 @@ public class Level {
 	}
 	
 	private void init() {
-		loadVertexArray();
-		shader = new Shader("/shaders/bg.vert", "/shaders/bg.frag");
-		shader.setUniform1i("tex",0);
-		shader.setUniformMat4f("proj_mat", proj_mat);
+		createMesh();
 	}
 	
-	private void loadVertexArray() {
+	private void createMesh() {
 		vertices = new float[]{
 				-4f, -3f, 0f,
 				-4f, 3f, 0f,
@@ -41,12 +41,11 @@ public class Level {
 				0, 1, 2,
 				2, 3, 0
 		};
-		//TODO understand this
 		tcs = new float[]{
-				0,1,
-				0,0,
-				1,0,
-				1,1
+				0, 1,
+				0, 0,
+				1, 0,
+				1, 1
 		};
 		
 		mesh = new VertexArray(vertices, indices, tcs);

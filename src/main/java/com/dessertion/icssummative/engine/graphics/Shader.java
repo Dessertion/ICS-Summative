@@ -51,47 +51,54 @@ public class Shader {
 		return ret;
 	}
 	
-	public void setUniform1i(String varName, int val) {
+	public Shader setUniform1i(String varName, int val) {
 		if (!enabled) enable();
 		glUniform1i(getUniformLocation(varName), val);
+		return this;
 	}
 	
-	public void setUniform2i(String varName, int x, int y) {
+	public Shader setUniform2i(String varName, int x, int y) {
 		if (!enabled) enable();
 		glUniform2i(getUniformLocation(varName), x, y);
+		return this;
 	}
 	
-	public void setUniform2i(String varName, Vector2i v) {
+	public Shader setUniform2i(String varName, Vector2i v) {
 		if (!enabled) enable();
 		setUniform2i(varName, v.x, v.y);
+		return this;
 	}
 	
-	public void setUniform3i(String varName, Vector3i v) {
+	public Shader setUniform3i(String varName, Vector3i v) {
 		if (!enabled) enable();
 		glUniform3i(getUniformLocation(varName), v.x, v.y, v.z);
+		return this;
 	}
 	
-	public void setUniform2f(String varName, float x, float y) {
+	public Shader setUniform2f(String varName, float x, float y) {
 		if (!enabled) enable();
 		glUniform2f(getUniformLocation(varName), x, y);
+		return this;
 	}
 	
-	public void setUniform2f(String varName, Vector2f v) {
+	public Shader setUniform2f(String varName, Vector2f v) {
 		if (!enabled) enable();
 		glUniform2f(getUniformLocation(varName), v.x, v.y);
+		return this;
 	}
 	
-	public void setUniform3f(String varName, Vector3f v) {
+	public Shader setUniform3f(String varName, Vector3f v) {
 		if (!enabled) enable();
 		glUniform3f(getUniformLocation(varName), v.x, v.y, v.z);
+		return this;
 	}
 	
-	//TODO check works or not lol
-	public void setUniformMat4f(String varName, Matrix4f mat) {
+	public Shader setUniformMat4f(String varName, Matrix4f mat) {
 		if (!enabled) enable();
 		FloatBuffer fb = BufferUtils.createFloatBuffer(16);
 		//FloatBuffer fb = MyBufferUtils.createFloatBuffer(mat.get(new float[4 * 4]));
 		glUniformMatrix4fv(getUniformLocation(varName), false, mat.get(fb));
+		return this;
 	}
 	//</editor-fold>
 	
