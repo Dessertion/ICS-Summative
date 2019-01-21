@@ -1,6 +1,7 @@
 package com.dessertion.icssummative.game;
 
 import com.dessertion.icssummative.engine.graphics.*;
+import com.dessertion.icssummative.game.entities.Bloon;
 
 import static com.dessertion.icssummative.engine.Engine.proj_mat;
 
@@ -23,6 +24,7 @@ public class Level {
 	public Level() {
 		init();
 		tex = new Texture("/textures/level.png");
+		Bloon test = new Bloon(0,0,Bloon.BloonType.RED);
 	}
 	
 	private void init() {
@@ -52,11 +54,13 @@ public class Level {
 	}
 	
 	public void render() {
-		tex.bind();
+		
 		shader.enable();
+		tex.bind();
 		mesh.render();
-		shader.disable();
 		tex.unbind();
+		shader.disable();
+		Bloon.renderAll();
 	}
 	
 }
