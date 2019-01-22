@@ -13,17 +13,17 @@ public class ResourceUtils {
 	 * @return Contents of the file as string
 	 */
 	public static String loadResourceAsString(String path){
-		String result = "";
+		StringBuilder result = new StringBuilder();
 		File   file   = new File(ResourceUtils.class.getResource(path).getFile());
 		//lol black magicks :D
 		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-			for (String temp = ""; temp != null; temp=br.readLine()) result += temp+"\n";
+			for (String temp = ""; temp != null; temp=br.readLine()) result.append(temp+"\n");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return result;
+		return result.toString();
 	}
 }
 

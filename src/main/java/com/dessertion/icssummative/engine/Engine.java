@@ -22,10 +22,12 @@ public class Engine implements Runnable {
 	
 	public static Matrix4f       proj_mat   = new Matrix4f().ortho(-4.0f,4.0f,-3.0f,3.0f,1.0f,-1.0f);
 	
-	
+	public static int WIDTH,HEIGHT;
 	
 	public Engine(String windowTitle, int width, int height, boolean vsync) throws Exception {
 		window = new Window(windowTitle, width, height, vsync);
+		WIDTH=width;
+		HEIGHT=height;
 		gameThread = new Thread(this, "GAME_THREAD");
 		timer = new Timer();
 		

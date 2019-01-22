@@ -1,28 +1,37 @@
 package com.dessertion.icssummative.game.util;
 
-import java.util.ArrayList;
+import java.io.*;
+import java.util.*;
 
 /**
  * @author Dessertion
  */
 public class Node {
 	
-	public static ArrayList<Node> nodes = new ArrayList<>();
+	public static List<Node> nodes = Collections.synchronizedList(new ArrayList<>());
 	
 	private float x,y;
 	
-	public Node(float x, float y){
+	private Node(float x, float y){
 		this.x=x;
 		this.y=y;
 		nodes.add(this);
 	}
 	
-	public void release(){
+	public static void init(){
+		Scanner sc = new Scanner(Node.class.getResourceAsStream("/data/nodes.dat"));
+		while(sc.hasNext()){
+			new Node(sc.nextFloat(),sc.nextFloat());
+		}
+		System.out.println(nodes.size());
+	}
+	
+	private void release(){
 		nodes.remove(this);
 	}
 	
 	public static void releaseAll(){
-		nodes.forEach(Node::release);
+		nodes.clear();
 	}
 	
 	public float getX() {

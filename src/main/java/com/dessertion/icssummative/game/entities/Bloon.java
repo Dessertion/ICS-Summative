@@ -25,7 +25,7 @@ public class Bloon extends Entity{
 	
 	public Bloon(float x, float y, BloonType type){
 		//TODO maybe create bloon factory? idk
-		super(x,y,type.size,type.size,-0.2f);
+		super(x,y,type.size*3/4,type.size,-0.2f);
 		//TODO moab
 		tex = new Texture("/textures/" + type.texString);
 		this.size = size;
@@ -33,14 +33,15 @@ public class Bloon extends Entity{
 		bloons.add(this);
 	}
 	
+	
 	public enum BloonType{
-		RED(0.5f,"red_bloon.png"),
-		BLUE(1.15f*0.5f,"blue_bloon.png"),
-		GREEN(1.3f*0.5f,"green_bloon.png"),
-		YELLOW(1.5f*0.5f,"yellow_bloon.png"),
-		PINK(1.7f*0.5f,"pink_bloon.png"),
-		RAINBOW(1.8f*0.5f,"rainbow_bloon.png"),
-		LEAD(1.4f*0.5f,"lead_bloon.png"),
+		RED(0.4f,"red_bloon.png"),
+		BLUE(1.15f*0.4f,"blue_bloon.png"),
+		GREEN(1.3f*0.4f,"green_bloon.png"),
+		YELLOW(1.5f*0.4f,"yellow_bloon.png"),
+		PINK(1.7f*0.4f,"pink_bloon.png"),
+		RAINBOW(1.8f*0.4f,"rainbow_bloon.png"),
+		LEAD(1.4f*0.4f,"lead_bloon.png"),
 		MOAB(2f,"moab.png"),
 		TEST(5f,"test.png");
 		private final float size;
@@ -94,6 +95,10 @@ public class Bloon extends Entity{
 	
 	public void remove(){
 		bloons.remove(this);
+	}
+	
+	public static void removeAll() {
+		bloons.forEach(Bloon::remove);
 	}
 	
 	//<editor-fold desc="Getter Setters">
