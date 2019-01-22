@@ -75,7 +75,7 @@ public final class Window {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glActiveTexture(GL_TEXTURE0);
 		
-		setClearColor(1,1,1,1);	//set clear colour
+		setClearColor(0,0,0,0);	//set clear colour
 		
 		//setup input callbacks
 		glfwSetMouseButtonCallback(windowHandle, new MouseInput());

@@ -50,7 +50,7 @@ public class Texture {
 		int[] ret = new int[pixels.length];
 		int a,r,g,b;
 		for(int i = 0; i < width*height;i++){
-			Color c = new Color(pixels[i]);
+			Color c = new Color(pixels[i],true);
 			a = c.getAlpha();
 			r = c.getRed();
 			g = c.getGreen();

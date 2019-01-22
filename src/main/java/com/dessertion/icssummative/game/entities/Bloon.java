@@ -42,7 +42,7 @@ public class Bloon extends Entity{
 		RAINBOW(1.8f*0.5f,"rainbow_bloon.png"),
 		LEAD(1.4f*0.5f,"lead_bloon.png"),
 		MOAB(2f,"moab.png"),
-		TEST(5f,"blending_transparent_window.png");
+		TEST(5f,"test.png");
 		private final float size;
 		private final String texString;
 		BloonType(float size, String texString){

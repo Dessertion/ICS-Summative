@@ -25,6 +25,7 @@ public class Level {
 		init();
 		tex = new Texture("/textures/level.png");
 		Bloon test = new Bloon(0,0,Bloon.BloonType.TEST);
+		Bloon test2 = new Bloon(1f,0,Bloon.BloonType.RED);
 	}
 	
 	private void init() {
