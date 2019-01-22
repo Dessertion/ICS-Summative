@@ -55,7 +55,6 @@ public class Texture {
 			r = c.getRed();
 			g = c.getGreen();
 			b = c.getBlue();
-			
 			ret[i] = a<<24|b<<16|g<<8|r;
 		}
 		return ret;

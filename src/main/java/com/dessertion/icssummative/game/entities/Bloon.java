@@ -2,6 +2,7 @@ package com.dessertion.icssummative.game.entities;
 
 import com.dessertion.icssummative.engine.graphics.Shader;
 import com.dessertion.icssummative.engine.graphics.Texture;
+import org.joml.Matrix4f;
 
 import java.util.Comparator;
 import java.util.TreeSet;
@@ -16,6 +17,7 @@ public class Bloon extends Entity{
 	public static Shader bloonShader = new Shader("/shaders/bloon.vert","/shaders/bloon.frag")
 			.setUniform1i("tex",0)
 			.setUniformMat4f("proj_mat",proj_mat);
+	
 	public static TreeSet<Bloon> bloons = new TreeSet<>(Comparator.comparing(Bloon::getType));
 	
 	private float     size;
@@ -32,14 +34,15 @@ public class Bloon extends Entity{
 	}
 	
 	public enum BloonType{
-		RED(1f,"red_bloon.png"),
-		BLUE(1.15f,"blue_bloon.png"),
-		GREEN(1.3f,"green_bloon.png"),
-		YELLOW(1.5f,"yellow_bloon.png"),
-		PINK(1.7f,"pink_bloon.png"),
-		RAINBOW(1.8f,"rainbow_bloon.png"),
-		LEAD(1.4f,"lead_bloon.png"),
-		MOAB(5f,"moab.png");
+		RED(0.5f,"red_bloon.png"),
+		BLUE(1.15f*0.5f,"blue_bloon.png"),
+		GREEN(1.3f*0.5f,"green_bloon.png"),
+		YELLOW(1.5f*0.5f,"yellow_bloon.png"),
+		PINK(1.7f*0.5f,"pink_bloon.png"),
+		RAINBOW(1.8f*0.5f,"rainbow_bloon.png"),
+		LEAD(1.4f*0.5f,"lead_bloon.png"),
+		MOAB(2f,"moab.png"),
+		TEST(5f,"blending_transparent_window.png");
 		private final float size;
 		private final String texString;
 		BloonType(float size, String texString){
@@ -65,21 +68,33 @@ public class Bloon extends Entity{
 		tex.unbind();
 	}
 	
+	private void renderAllUtil(){
+		model_mat = new Matrix4f().translate(position);
+		bloonShader.setUniformMat4f("model_mat",model_mat);
+		mesh.render();
+	}
+	
 	public static void renderAll(){
 		bloonShader.enable();
 		Texture temp = null;
 		for(Bloon bloon : bloons){
 			if(bloon.getTexture()!=temp){
-				if(temp!=null)temp.unbind();
 				temp = bloon.getTexture();
 				temp.bind();
 			}
-			bloon.getMesh().render();
+			bloon.renderAllUtil();
 		}
 		if(temp!=null)temp.unbind();
 		bloonShader.disable();
 	}
 	
+	public static void updateAll(){
+		bloons.forEach(Bloon::update);
+	}
+	
+	public void remove(){
+		bloons.remove(this);
+	}
 	
 	//<editor-fold desc="Getter Setters">
 	public float getSize() {

@@ -59,9 +59,6 @@ public class Engine implements Runnable {
 		//TODO remove, only for testing lol
 		if(testing)StateManager.testState=true;
 		StateManager.init();
-		
-		glActiveTexture(GL_TEXTURE0);
-		
 	}
 	
 	/**

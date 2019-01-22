@@ -20,8 +20,14 @@ public abstract class Entity {
 	protected VertexArray mesh;
 	protected Texture     tex;
 	
-	protected Vector3f pos;
+	protected Vector3f position;
 	protected Matrix4f model_mat;
+	
+	public Entity(float x, float y){
+		this.x=x;
+		this.y=y;
+		position = new Vector3f(x,y,0f);
+	}
 	
 	public Entity(float x, float y, float width, float height, float depth){
 		this(x,y);
@@ -123,12 +129,12 @@ public abstract class Entity {
 		this.tex = tex;
 	}
 	
-	public Vector3f getPos() {
-		return pos;
+	public Vector3f getPosition() {
+		return position;
 	}
 	
-	public void setPos(Vector3f pos) {
-		this.pos = pos;
+	public void setPosition(Vector3f position) {
+		this.position = position;
 	}
 	
 	public Matrix4f getModel_mat() {
@@ -139,11 +145,7 @@ public abstract class Entity {
 		this.model_mat = model_mat;
 	}
 	
-	public Entity(float x, float y){
-		this.x=x;
-		this.y=y;
-		pos = new Vector3f(x,y,0f);
-	}
+	
 	
 }
 

@@ -16,7 +16,7 @@ public class TestState implements State {
 	
 	@Override
 	public void update(double interval) {
-	
+		level.update();
 	}
 	
 	@Override

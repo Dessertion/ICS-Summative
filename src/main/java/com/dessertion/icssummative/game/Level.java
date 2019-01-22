@@ -24,7 +24,7 @@ public class Level {
 	public Level() {
 		init();
 		tex = new Texture("/textures/level.png");
-		Bloon test = new Bloon(0,0,Bloon.BloonType.RED);
+		Bloon test = new Bloon(0,0,Bloon.BloonType.TEST);
 	}
 	
 	private void init() {
@@ -60,8 +60,12 @@ public class Level {
 		mesh.render();
 		tex.unbind();
 		shader.disable();
+		
 		Bloon.renderAll();
 	}
 	
+	public void update() {
+		Bloon.updateAll();
+	}
 }
 
