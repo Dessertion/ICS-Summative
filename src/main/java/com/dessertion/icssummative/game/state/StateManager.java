@@ -10,7 +10,6 @@ public final class StateManager {
 	private static ArrayList<State> states;
 	private static State            current;
 	private static int              currentIdx;
-	public static boolean testState = false;
 	
 	/**
 	 * Called on first initialization of the manager
@@ -19,11 +18,7 @@ public final class StateManager {
 		states = new ArrayList<>();
 		states.add(new MainMenuState());
 		states.add(new MainGameState());
-		currentIdx = 0;
-		if(testState){
-			states.add(new TestState());
-			currentIdx=states.size()-1;
-		}
+		currentIdx = 1;
 		current = states.get(currentIdx);
 		for(State s : states)s.init();
 	}

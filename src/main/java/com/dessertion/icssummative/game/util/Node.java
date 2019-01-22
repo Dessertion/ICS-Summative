@@ -23,7 +23,7 @@ public class Node {
 		while(sc.hasNext()){
 			new Node(sc.nextFloat(),sc.nextFloat());
 		}
-		System.out.println(nodes.size());
+		System.out.println("Number of initialized nodes: " + nodes.size());
 	}
 	
 	private void release(){

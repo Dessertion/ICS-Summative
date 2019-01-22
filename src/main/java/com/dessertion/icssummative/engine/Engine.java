@@ -3,6 +3,7 @@ package com.dessertion.icssummative.engine;
 import com.dessertion.icssummative.engine.graphics.Shader;
 import com.dessertion.icssummative.game.state.StateManager;
 import org.joml.Matrix4f;
+import org.lwjgl.Version;
 
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 import static org.lwjgl.opengl.GL11.*;
@@ -18,7 +19,6 @@ public class Engine implements Runnable {
 	private final        Window  window;
 	private final        Thread  gameThread;
 	private              boolean running;
-	public boolean testing = false;
 	
 	public static Matrix4f       proj_mat   = new Matrix4f().ortho(-4.0f,4.0f,-3.0f,3.0f,1.0f,-1.0f);
 	
@@ -56,10 +56,9 @@ public class Engine implements Runnable {
 	}
 	
 	protected void init() {
+		System.out.println("OpenGL Version: " + Version.getVersion());
 		window.init();
 		timer.init();
-		//TODO remove, only for testing lol
-		if(testing)StateManager.testState=true;
 		StateManager.init();
 	}
 	
