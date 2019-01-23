@@ -10,7 +10,10 @@
     <properties>
         <lwjgl.version>3.2.1</lwjgl.version>
         <lwjgl.natives>natives-windows</lwjgl.natives>
+        <maven.compiler.source>1.11</maven.compiler.source>
+        <maven.compiler.target>1.11</maven.compiler.target>
     </properties>
+
 
     <dependencies>
         <dependency>
