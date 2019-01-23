@@ -12,11 +12,31 @@ import static org.lwjgl.opengl.GL30.glGenVertexArrays;
  * @author Dessertion
  */
 public class VertexArray {
-	private int vao,vbo,ibo,tbo; //vertex array object, vertex buffer object, indices buffer object, texture buffer object
+	private int vao,vbo,ibo,tbo; //vertex array object, vertex buffer object, indices buffer object, tex buffer object
 	private int vcount; //vertices
 	
 	public VertexArray(float[] vertices, byte[] indices, float[] textureCoordinates){
 		init(vertices, indices, textureCoordinates);
+	}
+	
+	public static VertexArray createMesh(float width, float height, float depth) {
+		float[] vertices = new float[]{
+				0.0f, 0.0f, depth,
+				0.0f, height, depth,
+				width, height, depth,
+				width, 0.0f, depth
+		};
+		byte[] indices = new byte[]{
+				0, 1, 2,
+				2, 3, 0
+		};
+		float[] tcs = new float[]{
+				0, 1,
+				0, 0,
+				1, 0,
+				1, 1
+		};
+		return new VertexArray(vertices, indices, tcs);
 	}
 	
 	private void init(float[] vertices, byte[] indices, float[] textureCoordinates) {

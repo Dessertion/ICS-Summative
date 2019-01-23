@@ -3,6 +3,7 @@ package com.dessertion.icssummative.game;
 import com.dessertion.icssummative.engine.graphics.*;
 import com.dessertion.icssummative.game.entities.Bloon;
 import com.dessertion.icssummative.game.entities.Entity;
+import org.joml.Matrix4f;
 
 import static com.dessertion.icssummative.engine.Engine.proj_mat;
 
@@ -11,16 +12,15 @@ import static com.dessertion.icssummative.engine.Engine.proj_mat;
  */
 public class Level {
 	
-	private        VertexArray mesh;
-	private        Texture     tex;
-	private static Shader      shader = new Shader("/shaders/bg.vert", "/shaders/bg.frag")
-											.setUniform1i("tex", 0)
-											.setUniformMat4f("proj_mat", proj_mat);
+	private VertexArray mesh;
+	private Texture     tex;
+	private BuyMenu     menu;
 	
+	private static Shader shader = new Shader("/shaders/level.vert", "/shaders/level.frag")
+			.setUniform1i("tex", 0)
+			.setUniformMat4f("proj_mat", proj_mat)
+			.setUniformMat4f("view_mat", new Matrix4f().translate(-4, -3, 0));
 	
-	private float[] vertices;
-	private float[] tcs;
-	private byte[]  indices;
 	
 	public Level() {
 		init();
@@ -28,30 +28,10 @@ public class Level {
 	}
 	
 	private void init() {
-		createMesh();
+		mesh = VertexArray.createMesh(8,6,0);
 		Bloon test = new Bloon(Bloon.BloonType.BLUE);
-	}
-	
-	private void createMesh() {
-		vertices = new float[]{
-				-4f, -3f, 0f,
-				-4f, 3f, 0f,
-				4f, 3f, 0f,
-				4f, -3f, 0f
-		};
+	//	menu = new BuyMenu();
 		
-		indices = new byte[]{
-				0, 1, 2,
-				2, 3, 0
-		};
-		tcs = new float[]{
-				0, 1,
-				0, 0,
-				1, 0,
-				1, 1
-		};
-		
-		mesh = new VertexArray(vertices, indices, tcs);
 	}
 	
 	public void render() {
@@ -61,8 +41,9 @@ public class Level {
 		mesh.render();
 		tex.unbind();
 		shader.disable();
-		
+		//menu.render();
 		Bloon.renderAll();
+		
 	}
 	
 	public void update() {

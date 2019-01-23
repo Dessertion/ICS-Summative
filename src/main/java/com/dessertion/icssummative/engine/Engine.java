@@ -20,7 +20,7 @@ public class Engine implements Runnable {
 	private final        Thread  gameThread;
 	private              boolean running;
 	
-	public static Matrix4f       proj_mat   = new Matrix4f().ortho(-4.0f,4.0f,-3.0f,3.0f,1.0f,-1.0f);
+	public static Matrix4f       proj_mat   = new Matrix4f().ortho(-4.0f,6.0f,-3.0f,3.0f,1.0f,-1.0f);
 	
 	public static int WIDTH,HEIGHT;
 	

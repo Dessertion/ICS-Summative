@@ -44,7 +44,7 @@ public abstract class Entity {
 		this.width = width;
 		this.height = height;
 		this.depth = depth;
-		createMesh(depth);
+		mesh = VertexArray.createMesh(width,height,depth);
 	}
 	
 	public enum EntityType {
@@ -57,26 +57,6 @@ public abstract class Entity {
 		TACK_TOWER,
 		BOMB_TOWER,
 		SUPER_TOWER
-	}
-	
-	protected void createMesh(float depth) {
-		float[] vertices = new float[]{
-				0.0f, 0.0f, depth,
-				0.0f, height, depth,
-				width, height, depth,
-				width, 0.0f, depth
-		};
-		byte[] indices = new byte[]{
-				0, 1, 2,
-				2, 3, 0
-		};
-		float[] tcs = new float[]{
-				0, 1,
-				0, 0,
-				1, 0,
-				1, 1
-		};
-		mesh = new VertexArray(vertices, indices, tcs);
 	}
 	
 	public abstract void update();
