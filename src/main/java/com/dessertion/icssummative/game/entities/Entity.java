@@ -5,6 +5,10 @@ import com.dessertion.icssummative.engine.graphics.VertexArray;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * @author Dessertion
  */
@@ -23,21 +27,27 @@ public abstract class Entity {
 	protected Vector3f position;
 	protected Matrix4f model_mat;
 	
-	public Entity(float x, float y){
-		this.x=x;
-		this.y=y;
-		position = new Vector3f(x,y,0f);
+	
+	protected boolean kill = false;
+
+	public static List<Entity> entities = Collections.synchronizedList(new ArrayList<>());
+	
+	public Entity(float x, float y) {
+		this.x = x;
+		this.y = y;
+		position = new Vector3f(x, y, 0f);
+		entities.add(this);
 	}
 	
-	public Entity(float x, float y, float width, float height, float depth){
-		this(x,y);
-		this.width=width;
-		this.height=height;
+	public Entity(float x, float y, float width, float height, float depth) {
+		this(x, y);
+		this.width = width;
+		this.height = height;
 		this.depth = depth;
 		createMesh(depth);
 	}
 	
-	public enum EntityType{
+	public enum EntityType {
 		BLOON,
 		MOAB,
 		DART,
@@ -49,7 +59,7 @@ public abstract class Entity {
 		SUPER_TOWER
 	}
 	
-	protected void createMesh(float depth){
+	protected void createMesh(float depth) {
 		float[] vertices = new float[]{
 				0.0f, 0.0f, depth,
 				0.0f, height, depth,
@@ -73,6 +83,7 @@ public abstract class Entity {
 	
 	public abstract void render();
 	
+	//<editor-fold desc="Getter Setters">
 	public float getX() {
 		return x;
 	}
@@ -145,7 +156,14 @@ public abstract class Entity {
 		this.model_mat = model_mat;
 	}
 	
+	public boolean isKill() {
+		return kill;
+	}
 	
+	public void setKill(boolean kill) {
+		this.kill = kill;
+	}
+	//</editor-fold>
 	
 }
 

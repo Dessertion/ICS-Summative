@@ -2,6 +2,7 @@ package com.dessertion.icssummative.game;
 
 import com.dessertion.icssummative.engine.graphics.*;
 import com.dessertion.icssummative.game.entities.Bloon;
+import com.dessertion.icssummative.game.entities.Entity;
 
 import static com.dessertion.icssummative.engine.Engine.proj_mat;
 
@@ -24,11 +25,11 @@ public class Level {
 	public Level() {
 		init();
 		tex = new Texture("/textures/level.png");
-		Bloon test = new Bloon(0,0,Bloon.BloonType.RED);
 	}
 	
 	private void init() {
 		createMesh();
+		Bloon test = new Bloon(Bloon.BloonType.BLUE);
 	}
 	
 	private void createMesh() {
@@ -66,6 +67,11 @@ public class Level {
 	
 	public void update() {
 		Bloon.updateAll();
+		
+		//remove killed
+		for(int i = 0 ; i < Entity.entities.size(); i++){
+			if(Entity.entities.get(i).isKill())Entity.entities.remove(i);
+		}
 	}
 }
 

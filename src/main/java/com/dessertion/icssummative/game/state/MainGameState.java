@@ -17,8 +17,8 @@ public class MainGameState implements State{
 	
 	@Override
 	public void init() {
-		level = new Level();
 		Node.init();
+		level = new Level();
 	}
 	
 	@Override
