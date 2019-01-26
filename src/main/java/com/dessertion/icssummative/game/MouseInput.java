@@ -14,6 +14,8 @@ import static org.lwjgl.glfw.GLFW.*;
 //TODO
 public class MouseInput extends GLFWMouseButtonCallback {
 	
+	public static boolean MOUSE_DOWN = false;
+	
 	@Override
 	public void invoke(long window, int button, int action, int mods) {
 		if(button == GLFW_MOUSE_BUTTON_1&&action==GLFW_PRESS){
@@ -24,7 +26,12 @@ public class MouseInput extends GLFWMouseButtonCallback {
 			
 			double normalizedX = -width + 2*width* (posX.get(0)/Engine.WIDTH);
 			double normalizedY = height - 2*height* (posY.get(0)/Engine.HEIGHT);
-			System.out.println(normalizedX + " " + normalizedY);
+			//System.out.println(normalizedX + " " + normalizedY);
+			MOUSE_DOWN=true;
+		}
+		else if(button == GLFW_MOUSE_BUTTON_1&&action==GLFW_RELEASE){
+			
+			MOUSE_DOWN=false;
 		}
 	}
 }

@@ -3,12 +3,13 @@ package com.dessertion.icssummative.engine;
 public final class Timer {
 	
 	private double lastCallTime;
+	private double lastSetTime;
 	
 	/**
 	 * For first time init
 	 */
 	public void init() {
-		lastCallTime = getTime();
+		lastSetTime = lastCallTime = getTime();
 	}
 	
 	/**
@@ -39,6 +40,14 @@ public final class Timer {
 	 */
 	public double getLastCallTime() {
 		return lastCallTime;
+	}
+	
+	public double getElapsedSinceSetTime(){
+		return getTime() - lastSetTime;
+	}
+	
+	public void setTime(){
+		lastSetTime=getTime();
 	}
 	
 }

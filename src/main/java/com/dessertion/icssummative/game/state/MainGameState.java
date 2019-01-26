@@ -3,6 +3,7 @@ package com.dessertion.icssummative.game.state;
 import com.dessertion.icssummative.engine.Window;
 import com.dessertion.icssummative.game.Level;
 import com.dessertion.icssummative.game.entities.Bloon;
+import com.dessertion.icssummative.game.entities.BloonFactory;
 import com.dessertion.icssummative.game.util.Node;
 
 import static org.lwjgl.opengl.GL11.GL_NO_ERROR;
@@ -13,7 +14,8 @@ import static org.lwjgl.opengl.GL11.glGetError;
  */
 public class MainGameState implements State{
 	
-	Level level;
+	private       Level   level;
+	public static boolean gameWin = false;
 	
 	@Override
 	public void init() {
@@ -23,6 +25,10 @@ public class MainGameState implements State{
 	
 	@Override
 	public void update(double interval) {
+		if(gameWin){
+			//TODO implement winning thing
+			System.out.println("hooray! you won!");
+		}
 		level.update();
 	}
 	

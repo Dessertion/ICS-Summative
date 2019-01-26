@@ -47,6 +47,10 @@ public abstract class Entity {
 		mesh = VertexArray.createMesh(width,height,depth);
 	}
 	
+	public void release() {
+		entities.remove(this);
+	}
+	
 	public enum EntityType {
 		BLOON,
 		MOAB,

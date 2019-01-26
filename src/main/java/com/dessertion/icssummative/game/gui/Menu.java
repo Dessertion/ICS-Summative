@@ -1,4 +1,4 @@
-package com.dessertion.icssummative.game;
+package com.dessertion.icssummative.game.gui;
 
 import com.dessertion.icssummative.engine.graphics.Shader;
 import com.dessertion.icssummative.engine.graphics.Texture;
