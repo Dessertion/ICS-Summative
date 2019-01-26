@@ -4,6 +4,8 @@ import com.dessertion.icssummative.engine.graphics.Texture;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
+import java.util.ArrayList;
+
 /**
  * @author Dessertion
  */
@@ -12,6 +14,8 @@ public class BuyMenu extends Menu {
 	private static final float WIDTH = 2f;
 	private static final float HEIGHT = 6f;
 	private static final Vector3f position = new Vector3f(4,-3,0);
+	
+	private static ArrayList<Button> buttons = new ArrayList<>();
 	
 	public BuyMenu() {
 		super(position, WIDTH, HEIGHT);
