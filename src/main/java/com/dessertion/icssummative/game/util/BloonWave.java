@@ -1,4 +1,6 @@
-package com.dessertion.icssummative.game.entities;
+package com.dessertion.icssummative.game.util;
+
+import com.dessertion.icssummative.game.entities.Bloon;
 
 import java.util.*;
 
