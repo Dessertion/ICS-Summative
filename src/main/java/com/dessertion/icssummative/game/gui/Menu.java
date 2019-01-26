@@ -15,9 +15,10 @@ public abstract class Menu {
 	
 	protected VertexArray mesh;
 	protected Texture     tex;
-//	protected Shader      menuShader = new Shader("/shaders/bloon.vert","/shaders/bloon.frag")
-//			.setUniform1i("tex",0)
-//			.setUniformMat4f("proj_mat",proj_mat);
+	protected Shader      menuShader = new Shader("/shaders/menu.vert","/shaders/menu.frag")
+			.setUniform1i("tex",0)
+			.setUniformMat4f("proj_mat",proj_mat);
+		
 	protected Vector3f    position;
 	protected float       width;
 	protected float       height;

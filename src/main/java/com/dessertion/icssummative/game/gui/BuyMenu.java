@@ -9,9 +9,9 @@ import org.joml.Vector3f;
  */
 public class BuyMenu extends Menu {
 	
-	private static final float WIDTH = 1f;
-	private static final float HEIGHT = 3f;
-	private static final Vector3f position = new Vector3f(4,0,0);
+	private static final float WIDTH = 2f;
+	private static final float HEIGHT = 6f;
+	private static final Vector3f position = new Vector3f(4,-3,0);
 	
 	public BuyMenu() {
 		super(position, WIDTH, HEIGHT);
@@ -32,11 +32,11 @@ public class BuyMenu extends Menu {
 	@Override
 	public void render() {
 		tex.bind();
-		//menuShader.setUniformMat4f("view_mat",new Matrix4f().translate(position));
-		//menuShader.enable();
+		menuShader.setUniformMat4f("view_mat",new Matrix4f().translate(position));
+		menuShader.enable();
 		
 		mesh.render();
-		//menuShader.disable();
+		menuShader.disable();
 		tex.unbind();
 	}
 	
