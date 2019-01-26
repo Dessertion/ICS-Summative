@@ -64,11 +64,9 @@ public class Level {
 		//remove killed
 		for(int i = 0 ; i < Entity.entities.size(); i++){
 			if(Entity.entities.get(i).isKill()){
-				Entity e = Entity.entities.get(i);
-				e.release();
+				Entity.entities.get(i).release();
 			}
 		}
-		System.out.println(Entity.entities.size());
 	}
 	
 	private void handleClickEvents() {
