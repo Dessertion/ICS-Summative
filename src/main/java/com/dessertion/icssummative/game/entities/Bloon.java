@@ -23,8 +23,11 @@ public class Bloon extends Entity{
 	
 	private float     size;
 	private float     speed;
+	
+	private float     distance = 0 ;
 	private BloonType type;
 	private int       nextNode = 0;
+	
 	
 	public Bloon(BloonType type){
 		super(Node.BEGIN.getX(),Node.BEGIN.getY(),type.size*3/4,type.size,-0.2f);
@@ -72,6 +75,7 @@ public class Bloon extends Entity{
 		}
 		dir = dir.normalize().mul(speed);
 		position.add(dir);
+		distance+=dir.length();
 	}
 	
 	@Override
@@ -132,6 +136,10 @@ public class Bloon extends Entity{
 	
 	public void setType(BloonType type) {
 		this.type = type;
+	}
+	
+	public float getDistance() {
+		return distance;
 	}
 	//</editor-fold>
 }
