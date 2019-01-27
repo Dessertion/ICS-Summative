@@ -1,6 +1,8 @@
 package com.dessertion.icssummative.game.gui;
 
 import com.dessertion.icssummative.engine.graphics.Texture;
+import com.dessertion.icssummative.game.Level;
+import com.dessertion.icssummative.game.util.BloonFactory;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
@@ -26,10 +28,11 @@ public class BuyMenu extends Menu {
 	@Override
 	public void init() {
 		
-		
-		Button startButton = new Button(4f,-2f, 2f, 1f);
+		Button startButton = new Button(4.1f,-2f, 1.8f, 1f);
 		startButton.loadTexture("/textures/start_button.png");
-		startButton.addButtonListener(()->{System.out.println("heyaaaa");});
+		startButton.addButtonListener(()->{
+			BloonFactory.beginWaveSpawning();
+			System.out.println("heyaaaa");});
 		buttons.add(startButton);
 	}
 	

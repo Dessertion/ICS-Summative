@@ -82,8 +82,6 @@ public class Engine implements Runnable {
 			
 			while (accumulated >= interval) {
 				update(interval);
-				update(interval);
-				update(interval);
 				updates++;
 				accumulated -= interval;
 			}

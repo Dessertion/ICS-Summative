@@ -62,7 +62,7 @@ public class Bloon extends Entity{
 	public void update() {
 		Node node = Node.nodes.get(nextNode);
 		Vector3f dir = new Vector3f(node.getV()).sub(position);
-		if(dir.length()<0.07f){
+		if(dir.length()<0.06f){
 			if(node == Node.END){
 				kill=true;
 				return;

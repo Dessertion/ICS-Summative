@@ -19,12 +19,8 @@ public class Level {
 	private VertexArray         mesh;
 	private Texture             tex;
 	private BuyMenu             menu;
-	private int                 waveNum;
 	private boolean             click     = false;
-	private boolean             startWave = false;
-	private BloonWave           currentWave = null;
 	private Timer               timer;
-	private BloonWave.BloonInfo currentInfo = null;
 	
 	private static Shader shader = new Shader("/shaders/level.vert", "/shaders/level.frag")
 			.setUniform1i("tex", 0)
@@ -58,8 +54,8 @@ public class Level {
 		Bloon.updateAll();
 		//handle click events
 		handleClickEvents();
-		if(startWave){
-			spawnWave();
+		if(BloonFactory.startWave){
+			BloonFactory.spawnWave();
 		}
 		//remove killed
 		for(int i = 0 ; i < Entity.entities.size(); i++){
@@ -71,39 +67,10 @@ public class Level {
 	
 	private void handleClickEvents() {
 		if(MouseInput.MOUSE_DOWN) click=true;
-		else if(click&&!startWave&&Bloon.bloons.isEmpty()){
+		else if(click){
 			click = false;
 			
-			if(BloonFactory.done()){
-				MainGameState.gameWin = true;
-				return;
-			}
-			
-			startWave=true;
-			currentWave = BloonFactory.getNextWave();
-			waveNum = currentWave.getWaveNum();
-			currentInfo =currentWave.getNext();
-			
-			timer.setTime();
-		}
-	}
-	
-	
-	private int numSpawned = 0;
-	private void spawnWave() {
-		if(currentInfo.num<=numSpawned){
-			currentInfo = currentWave.getNext();
-			timer.setTime();
-			numSpawned=0;
-			if(currentInfo==null){
-				startWave=false;
-				return;
-			}
-		}
-		if(timer.getElapsedSinceSetTime()>=currentInfo.delay){
-			timer.setTime();
-			BloonFactory.createBloon(currentInfo.bloonType);
-			numSpawned++;
+			menu.checkButtons();
 		}
 	}
 }
