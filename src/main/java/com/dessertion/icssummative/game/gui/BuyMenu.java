@@ -25,7 +25,12 @@ public class BuyMenu extends Menu {
 	
 	@Override
 	public void init() {
-	
+		
+		
+		Button startButton = new Button(4f,-2f, 2f, 1f);
+		startButton.loadTexture("/textures/start_button.png");
+		startButton.addButtonListener(()->{System.out.println("heyaaaa");});
+		buttons.add(startButton);
 	}
 	
 	@Override
@@ -33,20 +38,29 @@ public class BuyMenu extends Menu {
 	
 	}
 	
+	public void checkButtons(){
+		for(Button b : buttons){
+			if(b.checkClick()){
+				b.performAction();
+			}
+		}
+	}
+	
 	@Override
 	public void render() {
 		tex.bind();
 		menuShader.setUniformMat4f("view_mat",new Matrix4f().translate(position));
 		menuShader.enable();
-		
 		mesh.render();
 		menuShader.disable();
 		tex.unbind();
+		
+		renderComponents();
 	}
 	
 	@Override
 	public void renderComponents() {
-	
+		buttons.forEach(Button::render);
 	}
 }
 

@@ -8,8 +8,8 @@ public class FloatRect {
 	
 	/**
 	 * Default constructor for float rectangle
-	 * @param x x coordinate of top-left corner
-	 * @param y y coordinate of top-left corner
+	 * @param x x coordinate of bottom-left corner
+	 * @param y y coordinate of bottom-left corner
 	 * @param width width of rectangle
 	 * @param height height of rectangle
 	 */
@@ -43,10 +43,10 @@ public class FloatRect {
 		if(width <0|| height <0)return false;
 		
 		//check if less than either bound
-		if(X<x||y<Y)return false;
+		if(X<x||Y<y)return false;
 		
 		//return if within bounds
-		return (X<x+ width &&Y<y+ height);
+		return (X<x+width&&Y<y+height);
 	}
 	
 	/**
@@ -60,15 +60,15 @@ public class FloatRect {
 	
 	/**
 	 * Checks if this rectangle intersects with another specified rectangle
-	 * @param X x coordinate of top-left corner of the specified rectangle
-	 * @param Y y coordinate of top-left corner of the specified rectangle
+	 * @param X x coordinate of bottom-left corner of the specified rectangle
+	 * @param Y y coordinate of bottom-left corner of the specified rectangle
 	 * @param W width of the rectangle
 	 * @param H height of the rectangle
 	 * @return True if they intersect, false otherwise
 	 */
 	public boolean intersects(float X, float Y, float W, float H){
 		if(W < 0 || H < 0 || width < 0 || height < 0)return false;
-		return (W+X >= x && H+Y >= y && x+width >= X && y+height>=Y);
+		return (X+W >= x && Y-H <= y && x+width >= X && y-height<=Y);
 	}
 	
 	/**
