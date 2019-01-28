@@ -2,8 +2,6 @@ package com.dessertion.icssummative.game.gui;
 
 import com.dessertion.icssummative.engine.graphics.Texture;
 import com.dessertion.icssummative.game.Level;
-import com.dessertion.icssummative.game.MouseInput;
-import com.dessertion.icssummative.game.entities.TexturedImage;
 import com.dessertion.icssummative.game.entities.towers.*;
 import com.dessertion.icssummative.game.util.BloonFactory;
 import org.joml.Matrix4f;
@@ -44,11 +42,11 @@ public class BuyMenu extends Menu {
 		startButton.addButtonListener(BloonFactory::beginWaveSpawning);
 		buttons.add(startButton);
 		
-		Button dartMonkeyButton = new TowerButton(4.1f,1f,0.5f, 0.5f,TowerType.DART_TOWER);
+		Button dartMonkeyButton = new TowerBuyButton(4.1f,1f,0.5f, 0.5f,TowerType.DART_TOWER);
 		dartMonkeyButton.loadTexture("/textures/dart_monkey1.png");
 		buttons.add(dartMonkeyButton);
 		
-		Button tackTowerButton = new TowerButton(4.7f, 1f,0.5f, 0.5f,TowerType.TACK_TOWER);
+		Button tackTowerButton = new TowerBuyButton(4.7f, 1f,0.5f, 0.5f,TowerType.TACK_TOWER);
 		tackTowerButton.loadTexture("/textures/tack_tower1.png");
 		buttons.add(tackTowerButton);
 	}

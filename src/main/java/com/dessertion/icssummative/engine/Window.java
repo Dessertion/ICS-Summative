@@ -1,17 +1,9 @@
 package com.dessertion.icssummative.engine;
 
-import com.dessertion.icssummative.engine.util.MyBufferUtils;
-import com.dessertion.icssummative.game.MouseInput;
-import org.lwjgl.BufferUtils;
+import com.dessertion.icssummative.game.input.KeyInput;
+import com.dessertion.icssummative.game.input.MouseInput;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.GL;
-import org.lwjgl.system.MemoryStack;
-
-import javax.imageio.ImageIO;
-import java.awt.image.*;
-import java.io.File;
-import java.io.IOException;
-import java.nio.*;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
@@ -92,6 +84,7 @@ public final class Window {
 		
 		//setup input callbacks
 		glfwSetMouseButtonCallback(windowHandle, new MouseInput());
+		glfwSetKeyCallback(windowHandle, new KeyInput());
 	}
 	
 	private void setIcon(){

@@ -4,6 +4,7 @@ import com.dessertion.icssummative.engine.Timer;
 import com.dessertion.icssummative.engine.graphics.Shader;
 import com.dessertion.icssummative.game.entities.Bloon;
 import com.dessertion.icssummative.game.entities.Entity;
+import com.dessertion.icssummative.game.gui.Button;
 import org.joml.Vector3f;
 
 import java.util.*;
@@ -18,13 +19,15 @@ public abstract class Tower extends Entity {
 	protected int     pierce;
 	protected float   range;
 	protected float   rate;
-	
-
 	protected float   size;
 	protected boolean physical;
 	
+	protected Button b;
+	
 	protected              com.dessertion.icssummative.engine.Timer timer;
 	public final static float                                    hitSize = 0.2f;
+	
+	
 	
 	public static Shader towerShader = new Shader("/shaders/tower.vert", "/shaders/tower.frag")
 			.setUniformMat4f("proj_mat", proj_mat);
@@ -36,6 +39,7 @@ public abstract class Tower extends Entity {
 		towers.add(this);
 		timer = new Timer();
 		this.size=size;
+		
 	}
 	
 	@Override

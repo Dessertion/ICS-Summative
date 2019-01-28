@@ -14,11 +14,9 @@ import static com.dessertion.icssummative.engine.Engine.proj_mat;
 public class TexturedImage extends Entity {
 	
 	public static Shader              imgShader      = new Shader("/shaders/bloon.vert","/shaders/bloon.frag").setUniformMat4f("proj_mat",proj_mat);
-	public static List<TexturedImage> texturedImages = Collections.synchronizedList(new ArrayList<>());
 	public TexturedImage(float x, float y, float width, float height, float depth, String path){
 		super(x,y,width,height,depth);
 		tex = new Texture(path);
-		texturedImages.add(this);
 	}
 	
 	public void update(float interp){

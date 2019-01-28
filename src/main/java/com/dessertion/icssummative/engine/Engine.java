@@ -1,15 +1,11 @@
 package com.dessertion.icssummative.engine;
 
-import com.dessertion.icssummative.engine.graphics.Shader;
-import com.dessertion.icssummative.game.MouseInput;
 import com.dessertion.icssummative.game.state.StateManager;
 import org.joml.Matrix4f;
 import org.lwjgl.Version;
 
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
-import static org.lwjgl.opengl.GL13.glActiveTexture;
 
 public class Engine implements Runnable {
 	

@@ -4,9 +4,9 @@ import com.dessertion.icssummative.engine.Timer;
 import com.dessertion.icssummative.engine.graphics.*;
 import com.dessertion.icssummative.engine.sound.Sound;
 import com.dessertion.icssummative.game.entities.*;
-import com.dessertion.icssummative.game.entities.projectiles.Projectile;
 import com.dessertion.icssummative.game.entities.towers.*;
 import com.dessertion.icssummative.game.gui.BuyMenu;
+import com.dessertion.icssummative.game.input.MouseInput;
 import com.dessertion.icssummative.game.state.MainGameState;
 import com.dessertion.icssummative.game.util.BloonFactory;
 import org.joml.Matrix4f;
@@ -117,7 +117,7 @@ public class Level {
 		}
 		
 		BuyMenu.buyingTower=null;
-		
+		Level.money-=buying.cost;
 		switch(buying){
 			case DART_TOWER: {
 				new DartTower((float)MouseInput.lastClickX, (float)MouseInput.lastClickY);

@@ -1,4 +1,4 @@
-package com.dessertion.icssummative.game;
+package com.dessertion.icssummative.game.input;
 
 import com.dessertion.icssummative.engine.Engine;
 import org.lwjgl.BufferUtils;
