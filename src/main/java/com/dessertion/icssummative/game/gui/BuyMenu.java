@@ -28,7 +28,7 @@ public class BuyMenu extends Menu {
 	@Override
 	public void init() {
 		
-		Button startButton = new Button(4.1f,-2f, 1.8f, 1f);
+		Button startButton = new Button(4.25f,-2f, 1.5f, 1f);
 		startButton.loadTexture("/textures/start_button.png");
 		startButton.addButtonListener(()->{
 			BloonFactory.beginWaveSpawning();

@@ -54,7 +54,7 @@ public class Button {
 	public void render(){
 		if(texture!=null)texture.bind();
 		buttonShader.enable();
-		buttonShader.setUniformMat4f("model_mat", new Matrix4f().translate(position));
+		buttonShader.setUniformMat4f("view_mat", new Matrix4f().translate(position));
 		mesh.render();
 		buttonShader.disable();
 		if(texture!=null)texture.unbind();

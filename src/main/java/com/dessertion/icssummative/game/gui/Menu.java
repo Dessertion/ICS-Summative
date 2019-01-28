@@ -27,7 +27,7 @@ public abstract class Menu {
 		this.position=position;
 		this.width=width;
 		this.height=height;
-		mesh = VertexArray.createMesh(width,height,0.1f);
+		mesh = VertexArray.createMesh(width,height,-0.1f);
 	}
 	
 	public abstract void init();
