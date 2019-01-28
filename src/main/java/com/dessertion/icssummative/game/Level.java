@@ -3,6 +3,8 @@ package com.dessertion.icssummative.game;
 import com.dessertion.icssummative.engine.Timer;
 import com.dessertion.icssummative.engine.graphics.*;
 import com.dessertion.icssummative.game.entities.*;
+import com.dessertion.icssummative.game.entities.towers.DartTower;
+import com.dessertion.icssummative.game.entities.towers.Tower;
 import com.dessertion.icssummative.game.gui.BuyMenu;
 import com.dessertion.icssummative.game.state.MainGameState;
 import com.dessertion.icssummative.game.util.BloonFactory;
@@ -48,10 +50,11 @@ public class Level {
 		shader.disable();
 		menu.render();
 		Bloon.renderAll();
+		Tower.towers.forEach(Entity::render);
 	}
 	
 	public void update() {
-		Bloon.updateAll();
+		Entity.entities.forEach(Entity::update);
 		//handle click events
 		handleClickEvents();
 		if(BloonFactory.startWave){
