@@ -2,6 +2,8 @@ package com.dessertion.icssummative.game.entities;
 
 import com.dessertion.icssummative.engine.Engine;
 import com.dessertion.icssummative.engine.graphics.*;
+import com.dessertion.icssummative.engine.sound.Sound;
+import com.dessertion.icssummative.engine.sound.SoundClip;
 import com.dessertion.icssummative.engine.util.Lerp;
 import com.dessertion.icssummative.game.entities.projectiles.Projectile;
 import com.dessertion.icssummative.game.util.FloatRect;
@@ -104,6 +106,7 @@ public class Bloon extends Entity{
 	
 	public void pop(Projectile source){
 		if(source==immuneAgainst)return;
+		Sound.playSound(Sound.POP);
 		switch (type) {
 			case BLUE:
 				setType(BloonType.RED);

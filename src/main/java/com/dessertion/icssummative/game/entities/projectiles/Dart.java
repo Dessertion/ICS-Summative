@@ -30,7 +30,6 @@ public class Dart extends Projectile {
 	@Override
 	public void update(float interp){
 		super.update(interp);
-		System.out.println(hitbox.x + "  " + hitbox.y);
 	}
 	
 	@Override

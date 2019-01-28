@@ -2,10 +2,10 @@ package com.dessertion.icssummative.game;
 
 import com.dessertion.icssummative.engine.Timer;
 import com.dessertion.icssummative.engine.graphics.*;
+import com.dessertion.icssummative.engine.sound.Sound;
 import com.dessertion.icssummative.game.entities.*;
 import com.dessertion.icssummative.game.entities.projectiles.Projectile;
-import com.dessertion.icssummative.game.entities.towers.DartTower;
-import com.dessertion.icssummative.game.entities.towers.Tower;
+import com.dessertion.icssummative.game.entities.towers.*;
 import com.dessertion.icssummative.game.gui.BuyMenu;
 import com.dessertion.icssummative.game.state.MainGameState;
 import com.dessertion.icssummative.game.util.BloonFactory;
@@ -42,6 +42,7 @@ public class Level {
 		timer = new Timer();
 		timer.init();
 		DartTower test = new DartTower(-0.5f, 0);
+		Sound.loopSound(Sound.BGM);
 	}
 	
 	public void render() {
@@ -75,9 +76,24 @@ public class Level {
 	private void handleClickEvents() {
 		if(MouseInput.MOUSE_DOWN) click=true;
 		else if(click){
+			if(BuyMenu.buyingTower!=null)placeTower();
 			click = false;
-			
 			menu.checkButtons();
+			
+		}
+	}
+	
+	private void placeTower() {
+		TowerType buying = BuyMenu.buyingTower;
+		BuyMenu.buyingTower=null;
+		
+		switch(buying){
+			case DART_TOWER: {
+				new DartTower((float)MouseInput.X, (float)MouseInput.Y);
+			}
+			case TACK_TOWER: break;
+			case BOMB_TOWER: break;
+			case SUPER_TOWER: break;
 		}
 	}
 }
