@@ -1,6 +1,10 @@
 package com.dessertion.icssummative.game.entities;
 
+import com.dessertion.icssummative.engine.Engine;
 import com.dessertion.icssummative.engine.graphics.*;
+import com.dessertion.icssummative.engine.util.Lerp;
+import com.dessertion.icssummative.game.entities.projectiles.Projectile;
+import com.dessertion.icssummative.game.util.FloatRect;
 import com.dessertion.icssummative.game.util.Node;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
@@ -22,10 +26,13 @@ public class Bloon extends Entity{
 	
 	private float     size;
 	private float     speed;
+	private Projectile immuneAgainst;
 	
 	private float     distance = 0 ;
 	private BloonType type;
 	private int       nextNode = 0;
+	
+	private FloatRect hitbox;
 	
 	
 	public Bloon(BloonType type){
@@ -49,16 +56,17 @@ public class Bloon extends Entity{
 		this.size = type.size;
 		this.type = type;
 		this.speed=type.speed;
+		hitbox = new FloatRect(position.x-size/2,position.y-size/2,size,size);
 	}
 	
 	
 	public enum BloonType{
-		RED(0.4f,0.02f,"red_bloon.png"),
-		BLUE(1.05f*0.4f,0.04f,"blue_bloon.png"),
-		GREEN(1.1f*0.4f,0.06f,"green_bloon.png"),
-		YELLOW(1.12f*0.4f,0.1f,"yellow_bloon.png"),
-		PINK(1.13f*0.4f,0.12f,"pink_bloon.png"),
-		RAINBOW(1.13f*0.4f,0.1f,"rainbow_bloon.png"),
+		RED(0.4f,0.01f,"red_bloon.png"),
+		BLUE(1.05f*0.4f,0.02f,"blue_bloon.png"),
+		GREEN(1.1f*0.4f,0.03f,"green_bloon.png"),
+		YELLOW(1.12f*0.4f,0.05f,"yellow_bloon.png"),
+		PINK(1.13f*0.4f,0.06f,"pink_bloon.png"),
+		RAINBOW(1.13f*0.4f,0.05f,"rainbow_bloon.png"),
 		LEAD(1.1f*0.4f,0.01f,"lead_bloon.png"),
 		MOAB(2f,0.01f,"moab.png"),
 		TEST(0.2f,0.01f,"test.png");
@@ -76,23 +84,26 @@ public class Bloon extends Entity{
 	}
 	
 	@Override
-	public void update() {
+	public void update(float interp) {
 		Node node = Node.nodes.get(nextNode);
 		Vector3f dir = new Vector3f(node.getV()).sub(position);
 		if(dir.length()<0.06f){
 			if(node == Node.END){
-				kill=true;
+				kill();
 				return;
 			}
 			node = Node.nodes.get(++nextNode);
 			dir = dir = new Vector3f(node.getV()).sub(position);
 		}
-		dir = dir.normalize().mul(speed);
-		position.add(dir);
+		dir.normalize().mul(speed);
+		position.lerp(new Vector3f(position).add(dir),interp*Engine.TARGET_UPS);
+		dir = new Vector3f().lerp(dir, interp*Engine.TARGET_UPS);
+		hitbox.translate(dir);
 		distance+=dir.length();
 	}
 	
-	public void pop(){
+	public void pop(Projectile source){
+		if(source==immuneAgainst)return;
 		switch (type) {
 			case BLUE:
 				setType(BloonType.RED);
@@ -109,15 +120,17 @@ public class Bloon extends Entity{
 			case RAINBOW:
 				setType(BloonType.PINK);
 				Bloon newSpawn = new Bloon(this);
+				newSpawn.immuneAgainst = source;
 				break;
 			case LEAD:
 				setType(BloonType.YELLOW);
 				break;
 			case RED:
 			default:
-				release();
+				kill();
 				break;
 		}
+		immuneAgainst=source;
 	}
 	
 	@Override
@@ -150,10 +163,6 @@ public class Bloon extends Entity{
 		bloonShader.disable();
 	}
 	
-	public static void updateAll(){
-		bloons.forEach(Bloon::update);
-	}
-	
 	@Override
 	public void release(){
 		super.release();
@@ -175,6 +184,10 @@ public class Bloon extends Entity{
 	
 	public float getDistance() {
 		return distance;
+	}
+	
+	public FloatRect getHitbox() {
+		return hitbox;
 	}
 	//</editor-fold>
 }

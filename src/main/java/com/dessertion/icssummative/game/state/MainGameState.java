@@ -28,7 +28,7 @@ public class MainGameState implements State{
 			//TODO implement winning thing
 			System.out.println("hooray! you won!");
 		}
-		level.update();
+		level.update((float) interval);
 	}
 	
 	@Override

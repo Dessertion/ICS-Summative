@@ -2,6 +2,7 @@ package com.dessertion.icssummative.game.entities.towers;
 
 import com.dessertion.icssummative.engine.graphics.Texture;
 import com.dessertion.icssummative.game.entities.Bloon;
+import com.dessertion.icssummative.game.entities.projectiles.Dart;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
@@ -25,13 +26,14 @@ public class DartTower extends Tower{
 		timer.setTime();
 		Vector3f dir = new Vector3f(target.getPosition()).sub(position);
 		ang = dir.angle(new Vector3f(0.0f,1.0f,0.0f));
+		if(dir.x>0)ang*=-1;
 		model_mat = new Matrix4f().rotation(ang, 0, 0, 1);
+		Dart dart = new Dart(new Vector3f(position), dir,this);
+		render();
 	}
 	
-	float ang = 0;
-	
 	@Override
-	public void update() {
+	public void update(float interp) {
 		Bloon target = getFirstBloonInRange();
 		if(target!=null) {
 			if(timer.getElapsedSinceSetTime()>1/rate)shoot(target);

@@ -21,6 +21,9 @@ public abstract class Entity {
 	protected float height;
 	protected float depth;
 	
+	
+	protected float ang;
+	
 	protected VertexArray mesh;
 	protected Texture     tex;
 	
@@ -28,7 +31,6 @@ public abstract class Entity {
 	protected Vector3f looking;
 	protected Matrix4f view_mat;
 	
-
 	
 	protected Matrix4f model_mat = new Matrix4f();
 	
@@ -57,7 +59,9 @@ public abstract class Entity {
 		entities.remove(this);
 	}
 	
-	public abstract void update();
+	public void kill(){kill=true;}
+	
+	public abstract void update(float interp);
 	
 	public abstract void render();
 	
@@ -149,6 +153,11 @@ public abstract class Entity {
 	public void setModel_mat(Matrix4f model_mat) {
 		this.model_mat = model_mat;
 	}
+	
+	public float getAng() {
+		return ang;
+	}
+	
 	//</editor-fold>
 	
 }

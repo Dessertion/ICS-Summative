@@ -22,8 +22,8 @@ public abstract class Tower extends Entity {
 	protected float   size;
 	protected boolean physical;
 	
-	protected com.dessertion.icssummative.engine.Timer timer;
-	protected final static float hitSize = 0.2f;
+	protected              com.dessertion.icssummative.engine.Timer timer;
+	protected final static float                                    hitSize = 0.2f;
 	
 	public static Shader towerShader = new Shader("/shaders/tower.vert", "/shaders/tower.frag")
 			.setUniformMat4f("proj_mat", proj_mat);
@@ -86,6 +86,15 @@ public abstract class Tower extends Entity {
 	public void setPhysical(boolean physical) {
 		this.physical = physical;
 	}
+	
+	public int getPierce() {
+		return pierce;
+	}
+	
+	public static float getHitSize() {
+		return hitSize;
+	}
+	
 	//</editor-fold>
 	
 }

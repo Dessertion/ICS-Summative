@@ -13,8 +13,8 @@ import static org.lwjgl.opengl.GL13.glActiveTexture;
 public class Engine implements Runnable {
 	
 	
-	private static final int     TARGET_FPS = 60;
-	private static final int     TARGET_UPS = 30;
+	public static final int     TARGET_FPS = 60;
+	public static final int     TARGET_UPS = 60;
 	private final        Timer   timer;
 	private final        Window  window;
 	private final        Thread  gameThread;

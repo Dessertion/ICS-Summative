@@ -1,5 +1,8 @@
 package com.dessertion.icssummative.game.util;
 
+import org.joml.Vector2f;
+import org.joml.Vector3f;
+
 /**
  * @author Dessertion
  */
@@ -80,5 +83,14 @@ public class FloatRect {
 		return intersects(r.x,r.y,r.width,r.height);
 	}
 	
+	public FloatRect translate(float dx, float dy){
+		this.x+=dx;
+		this.y+=dy;
+		return this;
+	}
+	
+	public FloatRect translate(Vector3f vec){
+		return translate(vec.x,vec.y);
+	}
 }
 

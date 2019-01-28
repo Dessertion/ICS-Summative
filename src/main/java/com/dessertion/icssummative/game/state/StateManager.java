@@ -31,14 +31,14 @@ public final class StateManager {
 	}
 	
 	/**
-	 * TODO
+	 *
 	 */
 	public static void pause() {
 	
 	}
 	
 	/**
-	 * TODO
+	 *
 	 */
 	public static void resume() {
 	

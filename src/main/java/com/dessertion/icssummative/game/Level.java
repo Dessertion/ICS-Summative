@@ -3,6 +3,7 @@ package com.dessertion.icssummative.game;
 import com.dessertion.icssummative.engine.Timer;
 import com.dessertion.icssummative.engine.graphics.*;
 import com.dessertion.icssummative.game.entities.*;
+import com.dessertion.icssummative.game.entities.projectiles.Projectile;
 import com.dessertion.icssummative.game.entities.towers.DartTower;
 import com.dessertion.icssummative.game.entities.towers.Tower;
 import com.dessertion.icssummative.game.gui.BuyMenu;
@@ -40,7 +41,7 @@ public class Level {
 		BloonFactory.init();
 		timer = new Timer();
 		timer.init();
-		DartTower test = new DartTower(-1.5f, 0);
+		DartTower test = new DartTower(-0.5f, 0);
 	}
 	
 	public void render() {
@@ -52,12 +53,14 @@ public class Level {
 		menu.render();
 		Bloon.renderAll();
 		Tower.towers.forEach(Entity::render);
+		Projectile.projectiles.forEach(Projectile::render);
 	}
 	
-	public void update() {
-		Entity.entities.forEach(Entity::update);
+	public void update(float interp) {
+		for(int i = 0 ; i < Entity.entities.size(); i++)Entity.entities.get(i).update(interp);
 		//handle click events
 		handleClickEvents();
+		
 		if(BloonFactory.startWave){
 			BloonFactory.spawnWave();
 		}
