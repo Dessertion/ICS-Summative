@@ -15,15 +15,16 @@ import static com.dessertion.icssummative.engine.Engine.proj_mat;
  */
 public abstract class Tower extends Entity {
 	
-	protected int     cost;
 	protected int     pierce;
 	protected float   range;
 	protected float   rate;
+	
+
 	protected float   size;
 	protected boolean physical;
 	
 	protected              com.dessertion.icssummative.engine.Timer timer;
-	protected final static float                                    hitSize = 0.2f;
+	public final static float                                    hitSize = 0.2f;
 	
 	public static Shader towerShader = new Shader("/shaders/tower.vert", "/shaders/tower.frag")
 			.setUniformMat4f("proj_mat", proj_mat);
@@ -55,14 +56,6 @@ public abstract class Tower extends Entity {
 	protected abstract void shoot(Bloon bloon);
 	
 	//<editor-fold desc="Getter Setters">
-	public int getCost() {
-		return cost;
-	}
-	
-	public void setCost(int cost) {
-		this.cost = cost;
-	}
-	
 	public float getRange() {
 		return range;
 	}
@@ -94,6 +87,11 @@ public abstract class Tower extends Entity {
 	public static float getHitSize() {
 		return hitSize;
 	}
+	
+	public float getSize() {
+		return size;
+	}
+	
 	
 	//</editor-fold>
 	

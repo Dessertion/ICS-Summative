@@ -9,8 +9,8 @@ import com.dessertion.icssummative.game.entities.towers.*;
 import com.dessertion.icssummative.game.gui.BuyMenu;
 import com.dessertion.icssummative.game.state.MainGameState;
 import com.dessertion.icssummative.game.util.BloonFactory;
-import com.dessertion.icssummative.game.util.BloonWave;
 import org.joml.Matrix4f;
+import org.joml.Vector3f;
 
 import static com.dessertion.icssummative.engine.Engine.proj_mat;
 
@@ -19,11 +19,15 @@ import static com.dessertion.icssummative.engine.Engine.proj_mat;
  */
 public class Level {
 	
-	private VertexArray         mesh;
-	private Texture             tex;
-	private BuyMenu             menu;
-	private boolean             click     = false;
-	private Timer               timer;
+	private VertexArray mesh;
+	private Texture     tex;
+	private BuyMenu     menu;
+	private boolean     click    = false;
+	
+	private Timer       timer;
+	
+	public static boolean     newRound = true;
+	public static int         money    = 650;
 	
 	private static Shader shader = new Shader("/shaders/level.vert", "/shaders/level.frag")
 			.setUniform1i("tex", 0)
@@ -41,7 +45,6 @@ public class Level {
 		BloonFactory.init();
 		timer = new Timer();
 		timer.init();
-		DartTower test = new DartTower(-0.5f, 0);
 		Sound.loopSound(Sound.BGM);
 	}
 	
@@ -53,24 +56,45 @@ public class Level {
 		shader.disable();
 		menu.render();
 		Bloon.renderAll();
-		Tower.towers.forEach(Entity::render);
-		Projectile.projectiles.forEach(Projectile::render);
+		for(Entity e : Entity.entities){
+			if(e instanceof Bloon)continue;
+			e.render();
+		}
+		
 	}
 	
 	public void update(float interp) {
+		//update things
 		for(int i = 0 ; i < Entity.entities.size(); i++)Entity.entities.get(i).update(interp);
+		menu.update();
+		
 		//handle click events
 		handleClickEvents();
 		
 		if(BloonFactory.startWave){
+			newRound =false;
 			BloonFactory.spawnWave();
 		}
+		else{
+			if(Bloon.bloons.isEmpty()&&!newRound){
+				newRound =true;
+				nextRound();
+			}
+		}
+		
+		
 		//remove killed
 		for(int i = 0 ; i < Entity.entities.size(); i++){
 			if(Entity.entities.get(i).isKill()){
 				Entity.entities.get(i).release();
 			}
 		}
+		
+	}
+	
+	private void nextRound() {
+		money+=99+BloonFactory.waveNum;
+		if(BloonFactory.done()) MainGameState.gameWin=true;
 	}
 	
 	private void handleClickEvents() {
@@ -79,22 +103,31 @@ public class Level {
 			if(BuyMenu.buyingTower!=null)placeTower();
 			click = false;
 			menu.checkButtons();
-			
 		}
 	}
 	
 	private void placeTower() {
 		TowerType buying = BuyMenu.buyingTower;
+		Vector3f mousePos = new Vector3f((float)MouseInput.lastClickX,(float)MouseInput.lastClickY,0);
+		for(Tower t : Tower.towers){
+			Vector3f dis = new Vector3f(mousePos).sub(t.getPosition());
+			if(dis.length()<t.getSize()/2+buying.size/2){
+				return;
+			}
+		}
+		
 		BuyMenu.buyingTower=null;
 		
 		switch(buying){
 			case DART_TOWER: {
-				new DartTower((float)MouseInput.X, (float)MouseInput.Y);
+				new DartTower((float)MouseInput.lastClickX, (float)MouseInput.lastClickY);
+				break;
 			}
-			case TACK_TOWER: break;
+			case TACK_TOWER: new TackTower((float)MouseInput.lastClickX, (float)MouseInput.lastClickY);break;
 			case BOMB_TOWER: break;
 			case SUPER_TOWER: break;
 		}
 	}
+	
 }
 

@@ -2,8 +2,9 @@ package com.dessertion.icssummative.game.gui;
 
 import com.dessertion.icssummative.engine.graphics.Texture;
 import com.dessertion.icssummative.game.Level;
-import com.dessertion.icssummative.game.entities.towers.Tower;
-import com.dessertion.icssummative.game.entities.towers.TowerType;
+import com.dessertion.icssummative.game.MouseInput;
+import com.dessertion.icssummative.game.entities.TexturedImage;
+import com.dessertion.icssummative.game.entities.towers.*;
 import com.dessertion.icssummative.game.util.BloonFactory;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
@@ -23,6 +24,7 @@ public class BuyMenu extends Menu {
 	
 	public static TowerType buyingTower = null;
 	
+	
 	public BuyMenu() {
 		super(position, WIDTH, HEIGHT);
 		tex = new Texture("/textures/buy_menu.png");
@@ -31,22 +33,29 @@ public class BuyMenu extends Menu {
 	
 	@Override
 	public void init() {
-		Button startButton = new Button(4.25f,-2f, 1.5f, 1f);
+		Button startButton = new Button(4.25f,-2.5f, 1.5f, 1f){
+			@Override
+			public void update(){
+				if(Level.newRound)grey=0;
+				else grey =1;
+			}
+		};
 		startButton.loadTexture("/textures/start_button.png");
 		startButton.addButtonListener(BloonFactory::beginWaveSpawning);
 		buttons.add(startButton);
 		
-		Button dartMonkeyButton = new Button(4.1f,1f,0.5f, 0.5f);
+		Button dartMonkeyButton = new TowerButton(4.1f,1f,0.5f, 0.5f,TowerType.DART_TOWER);
 		dartMonkeyButton.loadTexture("/textures/dart_monkey1.png");
-		dartMonkeyButton.addButtonListener(()->{
-			buyingTower=TowerType.DART_TOWER;
-		});
 		buttons.add(dartMonkeyButton);
+		
+		Button tackTowerButton = new TowerButton(4.7f, 1f,0.5f, 0.5f,TowerType.TACK_TOWER);
+		tackTowerButton.loadTexture("/textures/tack_tower1.png");
+		buttons.add(tackTowerButton);
 	}
 	
 	@Override
 	public void update() {
-	
+		buttons.forEach(Button::update);
 	}
 	
 	public void checkButtons(){
@@ -67,6 +76,10 @@ public class BuyMenu extends Menu {
 		tex.unbind();
 		
 		renderComponents();
+		if(buyingTower!=null){
+		
+		
+		}
 	}
 	
 	@Override

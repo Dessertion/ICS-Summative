@@ -1,6 +1,7 @@
 package com.dessertion.icssummative.engine;
 
 import com.dessertion.icssummative.engine.graphics.Shader;
+import com.dessertion.icssummative.game.MouseInput;
 import com.dessertion.icssummative.game.state.StateManager;
 import org.joml.Matrix4f;
 import org.lwjgl.Version;

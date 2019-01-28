@@ -21,6 +21,8 @@ public class Button {
 	public static Shader         buttonShader = new Shader("/shaders/button.vert", "/shaders/button.frag")
 											.setUniformMat4f("proj_mat", proj_mat);
 	
+	public int grey = 0;
+	
 	public Button(float x, float y, float w, float h) {
 		xx = x;
 		yy=y;
@@ -48,13 +50,18 @@ public class Button {
 	}
 	
 	public boolean checkClick(){
-		return rect.contains((float)MouseInput.X, (float)MouseInput.Y);
+		return rect.contains((float)MouseInput.lastClickX, (float)MouseInput.lastClickY);
+	}
+	
+	public void update(){
+	
 	}
 	
 	public void render(){
 		if(texture!=null)texture.bind();
 		buttonShader.enable();
 		buttonShader.setUniformMat4f("view_mat", new Matrix4f().translate(position));
+		buttonShader.setUniform1i("grey", grey);
 		mesh.render();
 		buttonShader.disable();
 		if(texture!=null)texture.unbind();

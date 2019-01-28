@@ -13,7 +13,6 @@ public class DartTower extends Tower{
 	
 	public DartTower(float x, float y) {
 		super(x, y,0.65f);
-		cost = 150;
 		pierce = 2;
 		range = 1.5f;
 		rate = 1f;
@@ -27,7 +26,6 @@ public class DartTower extends Tower{
 		Vector3f dir = new Vector3f(target.getPosition()).sub(position);
 		ang = dir.angle(new Vector3f(0.0f,1.0f,0.0f));
 		if(dir.x>0)ang*=-1;
-		model_mat = new Matrix4f().rotation(ang, 0, 0, 1);
 		Dart dart = new Dart(new Vector3f(position), dir,this);
 		render();
 	}

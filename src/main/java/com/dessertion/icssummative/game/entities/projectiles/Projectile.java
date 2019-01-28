@@ -26,7 +26,7 @@ public abstract class Projectile extends Entity {
 	protected FloatRect hitbox;
 	
 	public Projectile(float x, float y, float width, float height) {
-		super(x, y, width, height,-0.6f);
+		super(x, y, width, height,-0.8f);
 		projectiles.add(this);
 		hitbox = new FloatRect(x-width/2,y-height/2,width,height);
 	}

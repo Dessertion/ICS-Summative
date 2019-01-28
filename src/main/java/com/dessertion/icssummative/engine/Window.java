@@ -1,15 +1,24 @@
 package com.dessertion.icssummative.engine;
 
+import com.dessertion.icssummative.engine.util.MyBufferUtils;
 import com.dessertion.icssummative.game.MouseInput;
-import org.lwjgl.glfw.GLFWErrorCallback;
-import org.lwjgl.glfw.GLFWVidMode;
+import org.lwjgl.BufferUtils;
+import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.GL;
+import org.lwjgl.system.MemoryStack;
+
+import javax.imageio.ImageIO;
+import java.awt.image.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.*;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
 import static org.lwjgl.opengl.GL13.glActiveTexture;
+import static org.lwjgl.stb.STBImage.stbi_load;
 import static org.lwjgl.system.MemoryUtil.*;
 
 public final class Window {
@@ -57,6 +66,8 @@ public final class Window {
 		windowHandle = glfwCreateWindow(width, height, title, NULL, NULL);
 		if (windowHandle == NULL) throw new RuntimeException("Failed to create GLFW window");
 		
+		setIcon();
+		
 		//centre window
 		GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 		glfwSetWindowPos(windowHandle, (vidmode.width() - width) / 2, (vidmode.height() - height) / 2);
@@ -83,6 +94,10 @@ public final class Window {
 		glfwSetMouseButtonCallback(windowHandle, new MouseInput());
 	}
 	
+	private void setIcon(){
+		//TODO maybe later
+	}
+	
 	/**
 	 * Called on window destruction
 	 */
@@ -96,6 +111,7 @@ public final class Window {
 	 * Call on window render (renders)
 	 */
 	public void render() {
+		MouseInput.update(windowHandle);
 		glfwSwapBuffers(windowHandle);
 	}
 	

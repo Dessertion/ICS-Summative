@@ -9,15 +9,14 @@ import org.joml.Vector3f;
 /**
  * @author Dessertion
  */
-public class Dart extends Projectile {
-	
-	public Dart(Vector3f pos, Vector3f dir, Tower source) {
-		super(pos.x, pos.y, 0.3f, 0.15f);
-		tex=new Texture("/textures/dart.png");
-		velocity = new Vector3f(dir).normalize().mul(0.25f);
+public class Tack extends Projectile {
+	public Tack(Vector3f pos, Vector3f dir, Tower source) {
+		super(pos.x,pos.y,0.2f,0.1f);
+		tex = new Texture("/textures/dart.png");
+		velocity = new Vector3f(dir).normalize().mul(0.1f);
 		ang = source.getAng()+(float)Math.PI/2;
 		pierce = source.getPierce();
-		travelDis=source.getRange()*1.1f;
+		travelDis = source.getRange()*1.1f;
 	}
 	
 	@Override
@@ -25,11 +24,6 @@ public class Dart extends Projectile {
 		target.pop(this);
 		pierce--;
 		if(pierce<=0)kill();
-	}
-	
-	@Override
-	public void update(float interp){
-		super.update(interp);
 	}
 	
 	@Override
