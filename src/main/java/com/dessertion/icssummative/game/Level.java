@@ -40,6 +40,7 @@ public class Level {
 		BloonFactory.init();
 		timer = new Timer();
 		timer.init();
+		DartTower test = new DartTower(-1.5f, 0);
 	}
 	
 	public void render() {

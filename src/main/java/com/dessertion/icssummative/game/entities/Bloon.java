@@ -1,7 +1,6 @@
 package com.dessertion.icssummative.game.entities;
 
-import com.dessertion.icssummative.engine.graphics.Shader;
-import com.dessertion.icssummative.engine.graphics.Texture;
+import com.dessertion.icssummative.engine.graphics.*;
 import com.dessertion.icssummative.game.util.Node;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
@@ -31,8 +30,23 @@ public class Bloon extends Entity{
 	
 	public Bloon(BloonType type){
 		super(Node.BEGIN.getX(),Node.BEGIN.getY(),type.size*3/4,type.size,-0.2f);
+		setType(type);
+	}
+	
+	public Bloon(float x, float y, BloonType type){
+		this(type);
+		this.x=x;
+		this.y=y;
+	}
+	private Bloon(Bloon bloon){
+		super(bloon.x,bloon.y,bloon.width,bloon.height,-0.2f);
+		setType(bloon.type);
+	}
+	
+	public void setType(BloonType type){
+		mesh = VertexArray.createMesh(type.size*3/4,type.size,-0.2f);
 		tex = new Texture("/textures/" + type.texString);
-		this.size = size;
+		this.size = type.size;
 		this.type = type;
 		this.speed=type.speed;
 	}
@@ -47,7 +61,7 @@ public class Bloon extends Entity{
 		RAINBOW(1.13f*0.4f,0.1f,"rainbow_bloon.png"),
 		LEAD(1.1f*0.4f,0.01f,"lead_bloon.png"),
 		MOAB(2f,0.01f,"moab.png"),
-		TEST(5f,0.5f,"test.png");
+		TEST(0.2f,0.01f,"test.png");
 		private final float size;
 		private final float speed;
 		private final String texString;
@@ -78,6 +92,34 @@ public class Bloon extends Entity{
 		distance+=dir.length();
 	}
 	
+	public void pop(){
+		switch (type) {
+			case BLUE:
+				setType(BloonType.RED);
+				break;
+			case GREEN:
+				setType(BloonType.BLUE);
+				break;
+			case YELLOW:
+				setType(BloonType.GREEN);
+				break;
+			case PINK:
+				setType(BloonType.YELLOW);
+				break;
+			case RAINBOW:
+				setType(BloonType.PINK);
+				Bloon newSpawn = new Bloon(this);
+				break;
+			case LEAD:
+				setType(BloonType.YELLOW);
+				break;
+			case RED:
+			default:
+				release();
+				break;
+		}
+	}
+	
 	@Override
 	public void render() {
 		tex.bind();
@@ -88,8 +130,9 @@ public class Bloon extends Entity{
 	}
 	
 	private void renderAllUtil(){
-		model_mat = new Matrix4f().translate(position);
-		bloonShader.setUniformMat4f("model_mat",model_mat);
+		view_mat = new Matrix4f().translate(-width/2,-height/2,0);
+		bloonShader.setUniformMat4f("view_mat", view_mat);
+		bloonShader.setUniformMat4f("model_mat", new Matrix4f().translate(position));
 		mesh.render();
 	}
 	
@@ -97,8 +140,8 @@ public class Bloon extends Entity{
 		bloonShader.enable();
 		Texture temp = null;
 		for(Bloon bloon : bloons){
-			if(bloon.getTexture()!=temp){
-				temp = bloon.getTexture();
+			if(bloon.getTex()!=temp){
+				temp = bloon.getTex();
 				temp.bind();
 			}
 			bloon.renderAllUtil();
@@ -121,21 +164,13 @@ public class Bloon extends Entity{
 		bloons.clear();
 	}
 	
-	//<editor-fold desc="Getter Setters">
+	//<editor-fold desc="Getters">
 	public float getSize() {
 		return size;
 	}
 	
-	public void setSize(float size) {
-		this.size = size;
-	}
-	
 	public BloonType getType() {
 		return type;
-	}
-	
-	public void setType(BloonType type) {
-		this.type = type;
 	}
 	
 	public float getDistance() {

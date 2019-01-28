@@ -1,6 +1,14 @@
-package com.dessertion.icssummative.game.entities;
+package com.dessertion.icssummative.game.entities.towers;
+
+import com.dessertion.icssummative.engine.Timer;
+import com.dessertion.icssummative.engine.graphics.Shader;
+import com.dessertion.icssummative.game.entities.Bloon;
+import com.dessertion.icssummative.game.entities.Entity;
+import org.joml.Vector3f;
 
 import java.util.*;
+
+import static com.dessertion.icssummative.engine.Engine.proj_mat;
 
 /**
  * @author Dessertion
@@ -11,15 +19,22 @@ public abstract class Tower extends Entity {
 	protected int     pierce;
 	protected float   range;
 	protected float   rate;
+	protected float   size;
 	protected boolean physical;
 	
-	protected final static float size = 0.2f;
+	protected com.dessertion.icssummative.engine.Timer timer;
+	protected final static float hitSize = 0.2f;
+	
+	public static Shader towerShader = new Shader("/shaders/tower.vert", "/shaders/tower.frag")
+			.setUniformMat4f("proj_mat", proj_mat);
 	
 	public static List<Tower> towers = Collections.synchronizedList(new ArrayList<>());
 	
-	public Tower(float x, float y) {
-		super(x, y);
+	public Tower(float x, float y, float size) {
+		super(x,y,size,size,-0.5f);
 		towers.add(this);
+		timer = new Timer();
+		this.size=size;
 	}
 	
 	@Override
@@ -31,8 +46,8 @@ public abstract class Tower extends Entity {
 	protected Bloon getFirstBloonInRange() {
 		Bloon ret = null;
 		for (Bloon b : Bloon.bloons) {
-			float displ = (float) Math.sqrt(Math.pow(b.getX() - x, 2) + Math.pow(b.getY() - y, 2));
-			if ((displ < range) && (ret == null || b.getDistance() < ret.getDistance())) ret = b;
+			float displ = new Vector3f(b.getPosition()).sub(position).length();
+			if ((displ < range) && (ret == null || b.getDistance() > ret.getDistance())) ret = b;
 		}
 		return ret;
 	}

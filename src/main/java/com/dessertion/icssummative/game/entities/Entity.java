@@ -25,7 +25,12 @@ public abstract class Entity {
 	protected Texture     tex;
 	
 	protected Vector3f position;
-	protected Matrix4f model_mat;
+	protected Vector3f looking;
+	protected Matrix4f view_mat;
+	
+
+	
+	protected Matrix4f model_mat = new Matrix4f();
 	
 	
 	protected boolean kill = false;
@@ -36,6 +41,7 @@ public abstract class Entity {
 		this.x = x;
 		this.y = y;
 		position = new Vector3f(x, y, 0f);
+		looking = new Vector3f(0,1,0);
 		entities.add(this);
 	}
 	
@@ -49,18 +55,6 @@ public abstract class Entity {
 	
 	public void release() {
 		entities.remove(this);
-	}
-	
-	public enum EntityType {
-		BLOON,
-		MOAB,
-		DART,
-		BOMB,
-		NODE,
-		DART_TOWER,
-		TACK_TOWER,
-		BOMB_TOWER,
-		SUPER_TOWER
 	}
 	
 	public abstract void update();
@@ -116,7 +110,7 @@ public abstract class Entity {
 		this.mesh = mesh;
 	}
 	
-	public Texture getTexture() {
+	public Texture getTex() {
 		return tex;
 	}
 	
@@ -132,12 +126,12 @@ public abstract class Entity {
 		this.position = position;
 	}
 	
-	public Matrix4f getModel_mat() {
-		return model_mat;
+	public Matrix4f getView_mat() {
+		return view_mat;
 	}
 	
-	public void setModel_mat(Matrix4f model_mat) {
-		this.model_mat = model_mat;
+	public void setView_mat(Matrix4f view_mat) {
+		this.view_mat = view_mat;
 	}
 	
 	public boolean isKill() {
@@ -146,6 +140,14 @@ public abstract class Entity {
 	
 	public void setKill(boolean kill) {
 		this.kill = kill;
+	}
+	
+	public Matrix4f getModel_mat() {
+		return model_mat;
+	}
+	
+	public void setModel_mat(Matrix4f model_mat) {
+		this.model_mat = model_mat;
 	}
 	//</editor-fold>
 	
