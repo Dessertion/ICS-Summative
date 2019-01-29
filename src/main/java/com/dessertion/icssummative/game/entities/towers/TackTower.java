@@ -38,17 +38,6 @@ public class TackTower extends Tower{
 		Bloon target = getFirstBloonInRange();
 		if(target!=null&&timer.getElapsedSinceSetTime()>1/rate)shoot(target);
 	}
-	
-	@Override
-	public void render() {
-		towerShader.setUniformMat4f("model_mat",new Matrix4f().translate(position));
-		Vector3f off = new Vector3f(-width/2,-height/2,0);
-		towerShader.setUniformMat4f("view_mat", new Matrix4f().translate(off));
-		towerShader.enable();
-		tex.bind();
-		mesh.render();
-		tex.unbind();
-		towerShader.disable();
-	}
+
 }
 

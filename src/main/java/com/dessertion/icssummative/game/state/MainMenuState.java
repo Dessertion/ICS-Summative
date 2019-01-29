@@ -1,16 +1,18 @@
 package com.dessertion.icssummative.game.state;
 
 import com.dessertion.icssummative.engine.Window;
+import com.dessertion.icssummative.game.gui.MainMenuGUI;
 
 /**
  * @author Dessertion
  */
 public class MainMenuState implements State {
 	
+	protected MainMenuGUI menu;
 	
 	@Override
 	public void init() {
-	
+		menu = new MainMenuGUI();
 	}
 	
 	@Override
@@ -20,6 +22,7 @@ public class MainMenuState implements State {
 	
 	@Override
 	public void render(Window window) {
+		menu.render();
 	}
 	
 	@Override

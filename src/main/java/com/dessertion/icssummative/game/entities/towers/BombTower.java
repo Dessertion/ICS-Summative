@@ -2,6 +2,7 @@ package com.dessertion.icssummative.game.entities.towers;
 
 import com.dessertion.icssummative.engine.graphics.Texture;
 import com.dessertion.icssummative.game.entities.Bloon;
+import com.dessertion.icssummative.game.entities.projectiles.Bomb;
 import com.dessertion.icssummative.game.entities.projectiles.Dart;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
@@ -9,24 +10,29 @@ import org.joml.Vector3f;
 /**
  * @author Dessertion
  */
-public class DartTower extends Tower{
+public class BombTower extends Tower{
 	
-	public DartTower(float x, float y) {
-		super(x, y,0.65f);
-		pierce = 2;
-		range = 1.5f;
-		rate = 1f;
-		physical = true;
-		tex = new Texture("/textures/dart_monkey1.png");
+	
+	private float blastRadius;
+	
+	public BombTower(float x, float y) {
+		super(x, y, TowerType.BOMB_TOWER.size);
+		type = TowerType.BOMB_TOWER;
+		pierce = 1;
+		range = 2f;
+		rate = 0.5f;
+		physical = false;
+		tex = new Texture(type.path);
+		blastRadius = 1f;
 	}
 	
 	@Override
-	protected void shoot(Bloon target) {
+	public void shoot(Bloon target) {
 		timer.setTime();
 		Vector3f dir = new Vector3f(target.getPosition()).sub(position);
 		ang = dir.angle(new Vector3f(0.0f,1.0f,0.0f));
 		if(dir.x>0)ang*=-1;
-		Dart dart = new Dart(new Vector3f(position), dir,this);
+		Bomb bomb = new Bomb(new Vector3f(position), dir,this);
 		render();
 	}
 	
@@ -38,5 +44,8 @@ public class DartTower extends Tower{
 		}
 	}
 	
+	public float getBlastRadius() {
+		return blastRadius;
+	}
 }
 

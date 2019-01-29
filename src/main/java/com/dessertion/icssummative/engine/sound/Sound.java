@@ -6,6 +6,7 @@ package com.dessertion.icssummative.engine.sound;
 public enum Sound {
 	
 	BGM("/snd/bgm.wav"),
+	EXPLOSION("/snd/explosion.wav"),
 	POP("/snd/pop.wav");
 	
 	private String path;

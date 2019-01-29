@@ -21,31 +21,40 @@ public class Texture {
 		texture = load(path);
 	}
 	
-	private int load(String path) {
-		int[] pixels = null;
-		try{
-			File   file   = new File(getClass().getResource(path).getFile());
-			BufferedImage img = ImageIO.read(file);
-			width = img.getWidth(); height= img.getHeight();
-			pixels = new int[width*height];
-			img.getRGB(0,0,width,height,pixels,0,width);
-		}catch(IOException e){
-			e.printStackTrace();
-		}
+	public Texture(BufferedImage img){
+		texture = load(img);
+	}
+	
+	private int load(BufferedImage img) {
+		width = img.getWidth();
+		height = img.getHeight();
+		int[] pixels = new int[width * height];
+		img.getRGB(0, 0, width, height, pixels, 0, width);
 		
 		int[] data = ARGBtoRGBA(pixels);
-		int ret = glGenTextures();
+		int   ret  = glGenTextures();
 		
 		//bind tex
-		glBindTexture(GL_TEXTURE_2D,ret);
-		glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
-		glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,width,height,0,GL_RGBA,GL_UNSIGNED_BYTE,data);
-		glBindTexture(GL_TEXTURE_2D,0);
+		glBindTexture(GL_TEXTURE_2D, ret);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glBindTexture(GL_TEXTURE_2D, 0);
 		return ret;
 	}
 	
-	private int[] ARGBtoRGBA(int[] pixels) {
+	private int load(String path) {
+		File   file   = new File(getClass().getResource(path).getFile());
+		BufferedImage img = null;
+		try {
+			img = ImageIO.read(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return load(img);
+	}
+	
+	public int[] ARGBtoRGBA(int[] pixels) {
 		int[] ret = new int[pixels.length];
 		int a,r,g,b;
 		for(int i = 0; i < width*height;i++){

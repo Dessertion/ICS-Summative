@@ -30,7 +30,7 @@ public class Node {
 		while(sc.hasNext()){
 			new Node(sc.nextFloat(),sc.nextFloat());
 		}
-		System.out.println("Number of initialized nodes: " + nodes.size());
+		System.out.println("NumImage of initialized nodes: " + nodes.size());
 		BEGIN = nodes.get(0);
 		END = nodes.get(nodes.size()-1);
 	}

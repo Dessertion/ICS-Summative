@@ -5,6 +5,7 @@ import com.dessertion.icssummative.engine.graphics.Shader;
 import com.dessertion.icssummative.game.entities.Bloon;
 import com.dessertion.icssummative.game.entities.Entity;
 import com.dessertion.icssummative.game.gui.Button;
+import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
 import java.util.*;
@@ -21,6 +22,9 @@ public abstract class Tower extends Entity {
 	protected float   rate;
 	protected float   size;
 	protected boolean physical;
+	
+	protected TowerType type;
+	
 	
 	protected Button b;
 	
@@ -39,13 +43,35 @@ public abstract class Tower extends Entity {
 		towers.add(this);
 		timer = new Timer();
 		this.size=size;
-		
+		b = new Button(x-size/2,y-size/2,size,size);
+		b.addButtonListener(()->{
+			System.out.println("yeet");});
 	}
 	
 	@Override
 	public void release() {
 		super.release();
 		towers.remove(this);
+	}
+	
+	@Override
+	public void render(){
+		towerShader.setUniformMat4f("model_mat", new Matrix4f().translate(position).rotateZ(ang));
+		Vector3f off = new Vector3f(-width/2,-height/2,0).rotateZ(ang);
+		towerShader.setUniformMat4f("view_mat", new Matrix4f().translate(off));
+		towerShader.enable();
+		tex.bind();
+		mesh.render();
+		tex.unbind();
+		towerShader.disable();
+	}
+	
+	public boolean checkClick(){
+		if(b.checkClick()){
+			b.performAction();
+			return true;
+		}
+		return false;
 	}
 	
 	protected Bloon getFirstBloonInRange() {
@@ -58,6 +84,8 @@ public abstract class Tower extends Entity {
 	}
 	
 	protected abstract void shoot(Bloon bloon);
+	
+	
 	
 	//<editor-fold desc="Getter Setters">
 	public float getRange() {
@@ -94,6 +122,10 @@ public abstract class Tower extends Entity {
 	
 	public float getSize() {
 		return size;
+	}
+	
+	public Button getB() {
+		return b;
 	}
 	
 	

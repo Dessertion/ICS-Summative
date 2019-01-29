@@ -69,8 +69,4 @@ public class Button {
 	
 }
 
-interface ButtonListener{
-	void clicked();
-}
-
 

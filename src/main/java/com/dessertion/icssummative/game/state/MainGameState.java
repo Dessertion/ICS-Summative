@@ -14,7 +14,6 @@ import static org.lwjgl.opengl.GL11.glGetError;
 public class MainGameState implements State{
 	
 	private       Level   level;
-	public static boolean gameWin = false;
 	
 	@Override
 	public void init() {
@@ -24,10 +23,6 @@ public class MainGameState implements State{
 	
 	@Override
 	public void update(double interval) {
-		if(gameWin){
-			//TODO implement winning thing
-			System.out.println("hooray! you won!");
-		}
 		level.update((float) interval);
 	}
 	

@@ -26,14 +26,14 @@ public class TowerBuyButton extends Button{
 	
 	private void buyThing(TowerType type){
 		if(Level.money>=type.cost){
-			BuyMenu.buyingTower=type;
+			InGameGUI.buyingTower=type;
 			TexturedImage image =
 					new TexturedImage((float) MouseInput.X, (float) MouseInput.Y, type.size, type.size, -0.7f, type.path) {
 						@Override
 						public void update(float interp) {
 							position.x = (float) MouseInput.X;
 							position.y = (float) MouseInput.Y;
-							if(BuyMenu.buyingTower==null)kill();
+							if(InGameGUI.buyingTower==null)kill();
 						}
 					};
 		}

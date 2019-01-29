@@ -3,21 +3,21 @@ package com.dessertion.icssummative.game.entities.towers;
 import com.dessertion.icssummative.engine.graphics.Texture;
 import com.dessertion.icssummative.game.entities.Bloon;
 import com.dessertion.icssummative.game.entities.projectiles.Dart;
-import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
 /**
  * @author Dessertion
  */
-public class DartTower extends Tower{
+public class SuperTower extends Tower{
 	
-	public DartTower(float x, float y) {
-		super(x, y,0.65f);
-		pierce = 2;
-		range = 1.5f;
-		rate = 1f;
+	public SuperTower(float x, float y) {
+		super(x, y, TowerType.SUPER_TOWER.size);
+		type = TowerType.SUPER_TOWER;
+		pierce = 1;
+		range = 3f;
+		rate = 5f;
 		physical = true;
-		tex = new Texture("/textures/dart_monkey1.png");
+		tex = new Texture(type.path);
 	}
 	
 	@Override
@@ -37,6 +37,5 @@ public class DartTower extends Tower{
 			if(timer.getElapsedSinceSetTime()>1/rate)shoot(target);
 		}
 	}
-	
 }
 

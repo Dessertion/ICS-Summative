@@ -11,7 +11,7 @@ import static com.dessertion.icssummative.engine.Engine.proj_mat;
 /**
  * @author Dessertion
  */
-public abstract class Menu {
+public abstract class GUI {
 	
 	protected VertexArray mesh;
 	protected Texture     tex;
@@ -23,7 +23,8 @@ public abstract class Menu {
 	protected float       width;
 	protected float       height;
 	
-	public Menu(Vector3f position, float width, float height){
+	
+	public GUI(Vector3f position, float width, float height){
 		this.position=position;
 		this.width=width;
 		this.height=height;

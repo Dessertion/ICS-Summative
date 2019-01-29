@@ -73,17 +73,14 @@ public class Bloon extends Entity{
 		LEAD(1.1f*0.4f,0.01f,"lead_bloon.png"),
 		MOAB(2f,0.01f,"moab.png"),
 		TEST(0.2f,0.01f,"test.png");
-		private final float size;
-		private final float speed;
-		private final String texString;
+		public final float size;
+		public final float speed;
+		public final String texString;
 		BloonType(float size, float speed, String texString){
 			this.size=size;
 			this.texString=texString;
 			this.speed=speed;
 		}
-		public float getSize(){return size;}
-		
-		public String getTextureString(){return texString;}
 	}
 	
 	@Override
@@ -92,6 +89,7 @@ public class Bloon extends Entity{
 		Vector3f dir = new Vector3f(node.getV()).sub(position);
 		if(dir.length()<0.06f){
 			if(node == Node.END){
+				Level.lives-=type.ordinal();
 				kill();
 				return;
 			}

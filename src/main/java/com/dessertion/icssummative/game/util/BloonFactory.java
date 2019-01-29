@@ -1,6 +1,7 @@
 package com.dessertion.icssummative.game.util;
 
 import com.dessertion.icssummative.engine.Timer;
+import com.dessertion.icssummative.game.Level;
 import com.dessertion.icssummative.game.entities.Bloon;
 import com.dessertion.icssummative.game.state.MainGameState;
 
@@ -55,7 +56,7 @@ public final class BloonFactory {
 	public static void beginWaveSpawning(){
 		if(!startWave&&Bloon.bloons.isEmpty()) {
 			if (BloonFactory.done()) {
-				MainGameState.gameWin = true;
+				Level.gameWin = true;
 				return;
 			}
 			startWave = true;
@@ -84,6 +85,11 @@ public final class BloonFactory {
 			BloonFactory.createBloon(currentInfo.bloonType);
 			numSpawned++;
 		}
+	}
+	
+	public static void release(){
+		waves.clear();
+		
 	}
 
 }
