@@ -1,3 +1,3 @@
 # ICS-Summative
 
-Civ-like game for my ics summative :+1:
+Tower defensegame for my ics summative :+1:
