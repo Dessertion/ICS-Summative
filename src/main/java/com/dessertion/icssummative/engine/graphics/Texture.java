@@ -44,10 +44,9 @@ public class Texture {
 	}
 	
 	private int load(String path) {
-		File   file   = new File(getClass().getResource(path).getFile());
 		BufferedImage img = null;
 		try {
-			img = ImageIO.read(file);
+			img = ImageIO.read(getClass().getResourceAsStream(path));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -1,6 +1,7 @@
 package com.dessertion.icssummative.engine.util;
 
 import java.io.*;
+import java.util.Scanner;
 
 /**
  * @author Dessertion
@@ -14,15 +15,8 @@ public class ResourceUtils {
 	 */
 	public static String loadResourceAsString(String path){
 		StringBuilder result = new StringBuilder();
-		File   file   = new File(ResourceUtils.class.getResource(path).getFile());
-		//lol black magicks :D
-		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-			for (String temp = ""; temp != null; temp=br.readLine()) result.append(temp+"\n");
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		Scanner       sc     = new Scanner(ResourceUtils.class.getResourceAsStream(path));
+		while(sc.hasNext())result.append(sc.nextLine() + "\n");
 		return result.toString();
 	}
 }

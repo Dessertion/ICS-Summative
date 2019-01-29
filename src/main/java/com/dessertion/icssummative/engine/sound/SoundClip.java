@@ -3,6 +3,7 @@ package com.dessertion.icssummative.engine.sound;
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 /**
  * @author Dessertion
@@ -14,14 +15,12 @@ public class SoundClip{
 	}
 	
 	private void loadClip(String path) {
-		File file = new File(getClass().getResource(path).getFile());
 		
 		try {
-			if(file.exists()) {
-				AudioInputStream sstream = AudioSystem.getAudioInputStream(file);
+			URL                  url     = getClass().getResource(path);
+				AudioInputStream sstream = AudioSystem.getAudioInputStream(url);
 				clip = AudioSystem.getClip();
 				clip.open(sstream);
-			}
 		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
 			e.printStackTrace();
 		}

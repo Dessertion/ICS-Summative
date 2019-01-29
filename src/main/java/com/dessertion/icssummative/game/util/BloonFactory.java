@@ -23,19 +23,12 @@ public final class BloonFactory {
 	
 	public static void init(){
 		waves = new LinkedList<>();
-		File file = new File(BloonFactory.class.getResource("/data/waves.dat").getFile());
+		Scanner sc = new Scanner(BloonFactory.class.getResourceAsStream("/data/waves.dat"));
 		int waveNum = 1;
-		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-			for(String in=br.readLine(); in!=null; in=br.readLine()){
-				BloonWave temp = new BloonWave(waveNum++, in);
-				waves.add(temp);
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		while(sc.hasNext()){
+			BloonWave temp = new BloonWave(waveNum++,sc.nextLine());
+			waves.add(temp);
 		}
-		
 		timer = new Timer();
 	}
 	
