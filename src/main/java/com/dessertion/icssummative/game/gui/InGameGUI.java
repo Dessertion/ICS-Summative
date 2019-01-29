@@ -19,7 +19,7 @@ public class InGameGUI extends GUI {
 	private static final float HEIGHT = 6f;
 	private static final Vector3f position = new Vector3f(4,-3,0);
 	
-	private static ArrayList<Button> buttons = new ArrayList<>();
+	public static ArrayList<Button> buttons;
 	
 	public static TowerType buyingTower = null;
 	
@@ -27,14 +27,23 @@ public class InGameGUI extends GUI {
 	
 	public static Tower selectedTower = null;
 	
+	
+	private static TexturedImage heart = new TexturedImage(4.3f, 2.5f, 0.25f, 0.25f,-0.9f, "/textures/heart.png");
+	private static TexturedImage cash = new TexturedImage(4.3f,2.1f,0.25f,0.25f, -0.9f,"/textures/money.png");
+	
+	
 	public InGameGUI() {
 		super(position, WIDTH, HEIGHT);
 		tex = new Texture("/textures/buy_menu.png");
-		init();
 	}
 	
 	@Override
 	public void init() {
+		buttons = new ArrayList<>();
+		
+		buyingTower = null;
+		selectedTower = null;
+		
 		Button startButton = new Button(4.25f,-2.5f, 1.5f, 1f){
 			@Override
 			public void update(){
@@ -42,8 +51,6 @@ public class InGameGUI extends GUI {
 				else grey =1;
 			}
 		};
-		buyingTower = null;
-		selectedTower = null;
 		
 		startButton.loadTexture("/textures/start_button.png");
 		startButton.addButtonListener(BloonFactory::beginWaveSpawning);
@@ -65,15 +72,19 @@ public class InGameGUI extends GUI {
 		superTowerButton.loadTexture("/textures/super_tower1.png");
 		buttons.add(superTowerButton);
 		
-		TexturedImage heart = new TexturedImage(4.3f, 2.5f, 0.25f, 0.25f,-0.9f, "/textures/heart.png");
-		TexturedImage cash = new TexturedImage(4.3f,2.1f,0.25f,0.25f, -0.9f,"/textures/money.png");
+		System.out.println(Entity.entities.size());
 	
+		
+		
 		livesNum = new NumImage(Integer.toString(Level.lives),4.5f,2.4f,0.02f);
 		moneyNum = new NumImage(Integer.toString(Level.money),4.5f,2.0f, 0.02f);
 	}
 	
 	@Override
 	public void update() {
+		if(!Entity.entities.contains(heart))Entity.entities.add(heart);
+		if(!Entity.entities.contains(cash))Entity.entities.add(cash);
+		
 		buttons.forEach(Button::update);
 		if(Integer.parseInt(livesNum.getString())!=Level.lives){
 			Entity.entities.remove(livesNum);
@@ -111,5 +122,6 @@ public class InGameGUI extends GUI {
 	public void renderComponents() {
 		buttons.forEach(Button::render);
 	}
+	
 }
 

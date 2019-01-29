@@ -7,20 +7,24 @@ public enum Sound {
 	
 	BGM("/snd/bgm.wav"),
 	EXPLOSION("/snd/explosion.wav"),
-	POP("/snd/pop.wav");
+	DINK("/snd/dink.wav"),
+	POP("/snd/pop.wav"),
+	TITLE("/snd/title.wav");
 	
 	private String path;
 	Sound(String path){
 		this.path=path;
 	}
 	
-	public static void playSound(Sound sound){
+	public static SoundClip playSound(Sound sound){
 		SoundClip p = new SoundClip(sound.path);
 		p.play();
+		return p;
 	}
 	
-	public static void loopSound(Sound sound){
+	public static SoundClip loopSound(Sound sound){
 		SoundClip p = new SoundClip(sound.path);
 		p.loop();
+		return p;
 	}
 }

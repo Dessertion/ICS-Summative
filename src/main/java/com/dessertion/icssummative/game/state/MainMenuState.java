@@ -12,12 +12,14 @@ public class MainMenuState implements State {
 	
 	@Override
 	public void init() {
+		
 		menu = new MainMenuGUI();
+		menu.init();
 	}
 	
 	@Override
 	public void update(double interval) {
-	
+		menu.update();
 	}
 	
 	@Override
@@ -39,5 +41,7 @@ public class MainMenuState implements State {
 	public void mouseUpdate(Window window) {
 	
 	}
+	
+	
 }
 

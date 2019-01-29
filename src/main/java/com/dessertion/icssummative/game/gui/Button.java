@@ -33,6 +33,11 @@ public class Button {
 		mesh = VertexArray.createMesh(w,h,-0.3f);
 	}
 	
+	public Button(float x, float y, float w, float h, float depth){
+		this(x,y,w,h);
+		mesh = VertexArray.createMesh(w,h,depth);
+	}
+	
 	public void loadTexture(Texture texture){
 		this.texture=texture;
 	}

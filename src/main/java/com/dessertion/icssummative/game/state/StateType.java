@@ -4,5 +4,6 @@ package com.dessertion.icssummative.game.state;
 public enum StateType {
 	MAIN_MENU,
 	MAIN_GAME,
-	GAME_PAUSED
+	GAME_OVER,
+	GAME_WIN;
 }

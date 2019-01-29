@@ -13,7 +13,7 @@ import java.util.*;
  */
 public final class BloonFactory {
 
-	private static Queue<BloonWave> waves = new LinkedList<>();
+	private static Queue<BloonWave> waves;
 	private static BloonWave currentWave;
 	private static BloonWave.BloonInfo currentInfo;
 	private static Timer timer;
@@ -22,6 +22,7 @@ public final class BloonFactory {
 	public static boolean startWave;
 	
 	public static void init(){
+		waves = new LinkedList<>();
 		File file = new File(BloonFactory.class.getResource("/data/waves.dat").getFile());
 		int waveNum = 1;
 		try (BufferedReader br = new BufferedReader(new FileReader(file))) {

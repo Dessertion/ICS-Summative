@@ -72,7 +72,7 @@ public class Bloon extends Entity{
 		RAINBOW(1.13f*0.4f,0.05f,"rainbow_bloon.png"),
 		LEAD(1.1f*0.4f,0.01f,"lead_bloon.png"),
 		MOAB(2f,0.01f,"moab.png"),
-		TEST(0.2f,0.01f,"test.png");
+		TEST(0.2f,0.1f,"test.png");
 		public final float size;
 		public final float speed;
 		public final String texString;
@@ -89,7 +89,7 @@ public class Bloon extends Entity{
 		Vector3f dir = new Vector3f(node.getV()).sub(position);
 		if(dir.length()<0.06f){
 			if(node == Node.END){
-				Level.lives-=type.ordinal();
+				Level.lives-=type.ordinal()+1;
 				kill();
 				return;
 			}

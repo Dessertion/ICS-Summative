@@ -18,7 +18,7 @@ public final class StateManager {
 		states = new ArrayList<>();
 		states.add(new MainMenuState());
 		states.add(new MainGameState());
-		currentIdx = 1;
+		currentIdx = 0;
 		current = states.get(currentIdx);
 		for(State s : states)s.init();
 	}
@@ -48,6 +48,7 @@ public final class StateManager {
 	 * Updates current state
 	 */
 	public static void update(double interval) {
+		
 		current.update(interval);
 	}
 	
