@@ -13,13 +13,11 @@ import com.dessertion.icssummative.game.gui.Button;
 import com.dessertion.icssummative.game.gui.InGameGUI;
 import com.dessertion.icssummative.game.input.MouseInput;
 import com.dessertion.icssummative.game.state.MainGameState;
-import com.dessertion.icssummative.game.state.StateManager;
-import com.dessertion.icssummative.game.state.stateExceptions.InvalidStateException;
 import com.dessertion.icssummative.game.util.*;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
-import javax.sound.midi.Track;
+import javax.xml.soap.Text;
 import java.util.ArrayList;
 
 import static com.dessertion.icssummative.engine.Engine.proj_mat;
@@ -59,12 +57,15 @@ public class Level {
 	
 	public void init() {
 		System.out.println(Entity.entities.size());
-		if(!NumImage.initd)NumImage.init();
+		if(!NumImage.intialized)NumImage.init();
+		if(!TextImage.initialized) TextImage.init();
 		mesh = VertexArray.createMesh(8,6,0);
 		menu = new InGameGUI() ;
-		menu.init();
+		
 		BloonFactory.init();
+		menu.init();
 		timer = new Timer();
+		
 		timer.init();
 		bgm = Sound.loopSound(Sound.BGM);
 		newRound=true;

@@ -15,11 +15,11 @@ import static com.dessertion.icssummative.engine.Engine.proj_mat;
  */
 public class NumImage extends Entity{
 	
-	public static BufferedImage[] num = new BufferedImage[10];
-	public static Shader numberShader = new Shader("/shaders/number.vert","/shaders/number.frag").setUniformMat4f("proj_mat", proj_mat);
-	public static boolean initd =false;
+	public static BufferedImage[] num          = new BufferedImage[10];
+	public static Shader          numberShader = new Shader("/shaders/number.vert","/shaders/number.frag").setUniformMat4f("proj_mat", proj_mat);
+	public static boolean         intialized   =false;
 	public static void init(){
-		initd=true;
+		intialized =true;
 		BufferedImage numbers = null;
 		try {
 			numbers = ImageIO.read(NumImage.class.getResource("/textures/numbers.png"));

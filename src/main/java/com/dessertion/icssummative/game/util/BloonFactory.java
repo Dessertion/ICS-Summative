@@ -13,7 +13,7 @@ import java.util.*;
  */
 public final class BloonFactory {
 
-	private static Queue<BloonWave> waves;
+	public static Queue<BloonWave> waves;
 	private static BloonWave currentWave;
 	private static BloonWave.BloonInfo currentInfo;
 	private static Timer timer;

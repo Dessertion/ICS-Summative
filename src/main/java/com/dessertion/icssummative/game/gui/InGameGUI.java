@@ -23,7 +23,8 @@ public class InGameGUI extends GUI {
 	
 	public static TowerType buyingTower = null;
 	
-	public static NumImage moneyNum, livesNum;
+	public static NumImage moneyNum, livesNum, roundNum, totalRoundNum;
+	public static TextImage round, of;
 	
 	public static Tower selectedTower = null;
 	
@@ -72,18 +73,25 @@ public class InGameGUI extends GUI {
 		superTowerButton.loadTexture("/textures/super_tower1.png");
 		buttons.add(superTowerButton);
 		
-		System.out.println(Entity.entities.size());
-	
-		
-		
 		livesNum = new NumImage(Integer.toString(Level.lives),4.5f,2.4f,0.02f);
 		moneyNum = new NumImage(Integer.toString(Level.money),4.5f,2.0f, 0.02f);
+	
+		roundNum = new NumImage(Integer.toString(BloonFactory.waveNum),4.8f,-2.8f,0.02f);
+		totalRoundNum = new NumImage(Integer.toString(BloonFactory.waves.size()),5.3f,-2.8f,0.02f);
+	
+		round = new TextImage("ROUND", 4.12f,-2.8f,0.12f);
+		of = new TextImage("OF", 5f, -2.8f,0.12f);
 	}
 	
 	@Override
 	public void update() {
 		if(!Entity.entities.contains(heart))Entity.entities.add(heart);
 		if(!Entity.entities.contains(cash))Entity.entities.add(cash);
+		
+		if(!Entity.entities.contains(totalRoundNum))Entity.entities.add(totalRoundNum);
+		
+		if(!Entity.entities.contains(round))Entity.entities.add(round);
+		if(!Entity.entities.contains(of))Entity.entities.add(of);
 		
 		buttons.forEach(Button::update);
 		if(Integer.parseInt(livesNum.getString())!=Level.lives){
@@ -93,6 +101,10 @@ public class InGameGUI extends GUI {
 		if(Integer.parseInt(moneyNum.getString())!=Level.money){
 			Entity.entities.remove(moneyNum);
 			moneyNum = new NumImage(Integer.toString(Level.money),4.5f,2.0f, 0.02f);
+		}
+		if(Integer.parseInt(roundNum.getString())!=BloonFactory.waveNum){
+			Entity.entities.remove(roundNum);
+			roundNum = new NumImage(Integer.toString(BloonFactory.waveNum),4.8f,-2.8f,0.02f);
 		}
 	}
 	
