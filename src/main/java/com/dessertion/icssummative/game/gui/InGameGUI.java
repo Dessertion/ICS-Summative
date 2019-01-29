@@ -77,10 +77,10 @@ public class InGameGUI extends GUI {
 		moneyNum = new NumImage(Integer.toString(Level.money),4.5f,2.0f, 0.02f);
 	
 		roundNum = new NumImage(Integer.toString(BloonFactory.waveNum),4.8f,-2.8f,0.02f);
-		totalRoundNum = new NumImage(Integer.toString(BloonFactory.waves.size()),5.3f,-2.8f,0.02f);
+		totalRoundNum = new NumImage(Integer.toString(BloonFactory.waves.size()),5.6f,-2.8f,0.02f);
 	
 		round = new TextImage("ROUND", 4.12f,-2.8f,0.12f);
-		of = new TextImage("OF", 5f, -2.8f,0.12f);
+		of = new TextImage("OF", 5.2f, -2.8f,0.12f);
 	}
 	
 	@Override
